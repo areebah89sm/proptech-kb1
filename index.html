@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PropTech KB — AI-ассистент</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0e0d;
+  --bg2: #111816;
+  --bg3: #181f1c;
+  --surface: #1c2420;
+  --surface2: #222c28;
+  --border: rgba(29,158,117,0.15);
+  --border2: rgba(29,158,117,0.3);
+  --green: #1D9E75;
+  --green-light: #5DCAA5;
+  --green-dim: rgba(29,158,117,0.12);
+  --green-glow: rgba(29,158,117,0.06);
+  --text: #e8ede9;
+  --text2: #8fa898;
+  --text3: #506058;
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'Onest', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-size: 15px;
+  line-height: 1.6;
+  overflow: hidden;
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 28px;
+  border-bottom: 0.5px solid var(--border);
+  background: var(--bg2);
+  flex-shrink: 0;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-mark {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-mark svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.logo-name {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.logo-sub {
+  font-size: 10px;
+  color: var(--text3);
+  font-family: var(--mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.notion-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border: 0.5px solid var(--border2);
+  border-radius: 6px;
+  font-size: 12px;
+  color: var(--green-light);
+  text-decoration: none;
+  font-family: var(--mono);
+  letter-spacing: 0.02em;
+  transition: all 0.2s;
+}
+
+.notion-link:hover {
+  background: var(--green-dim);
+  border-color: var(--green);
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* Layout */
+.layout {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  height: calc(100vh - 57px);
+}
+
+/* Sidebar */
+.sidebar {
+  width: 260px;
+  min-width: 260px;
+  border-right: 0.5px solid var(--border);
+  background: var(--bg2);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.sidebar-section {
+  padding: 20px 16px 8px;
+}
+
+.sidebar-label {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: var(--mono);
+  margin-bottom: 10px;
+}
+
+.topic-btn {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: var(--text2);
+  font-family: var(--sans);
+  font-size: 13px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s;
+  margin-bottom: 2px;
+}
+
+.topic-btn:hover {
+  background: var(--green-dim);
+  color: var(--text);
+}
+
+.topic-btn.active {
+  background: var(--green-dim);
+  color: var(--green-light);
+  border: 0.5px solid var(--border2);
+}
+
+.topic-icon {
+  width: 18px;
+  font-size: 12px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  text-align: center;
+}
+
+.topic-content { flex: 1; }
+.topic-name { font-size: 13px; font-weight: 500; line-height: 1.3; }
+.topic-desc { font-size: 11px; color: var(--text3); margin-top: 2px; line-height: 1.3; }
+
+.divider {
+  height: 0.5px;
+  background: var(--border);
+  margin: 8px 16px;
+}
+
+.quick-stats {
+  padding: 12px 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.stat-mini {
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.stat-mini-val {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--green-light);
+  font-family: var(--mono);
+  letter-spacing: -0.02em;
+}
+
+.stat-mini-lbl {
+  font-size: 10px;
+  color: var(--text3);
+  margin-top: 2px;
+}
+
+/* Main chat area */
+.chat-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border2) transparent;
+}
+
+.messages::-webkit-scrollbar { width: 4px; }
+.messages::-webkit-scrollbar-track { background: transparent; }
+.messages::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+/* Welcome state */
+.welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  text-align: center;
+  padding: 40px 20px;
+  gap: 24px;
+}
+
+.welcome-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: var(--green-dim);
+  border: 0.5px solid var(--border2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+.welcome h1 {
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  color: var(--text);
+}
+
+.welcome p {
+  font-size: 14px;
+  color: var(--text2);
+  max-width: 380px;
+  line-height: 1.6;
+}
+
+.suggestions-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  width: 100%;
+  max-width: 520px;
+}
+
+.sug-card {
+  padding: 12px 14px;
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s;
+  font-family: var(--sans);
+}
+
+.sug-card:hover {
+  border-color: var(--green);
+  background: var(--green-dim);
+  transform: translateY(-1px);
+}
+
+.sug-card-icon {
+  font-size: 16px;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.sug-card-text {
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.4;
+}
+
+.sug-card:hover .sug-card-text {
+  color: var(--text);
+}
+
+/* Messages */
+.msg-row {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  max-width: 780px;
+  width: 100%;
+}
+
+.msg-row.user {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+.msg-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.msg-avatar.ai {
+  background: var(--green);
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 11px;
+}
+
+.msg-avatar.user {
+  background: var(--surface2);
+  border: 0.5px solid var(--border);
+  color: var(--text2);
+  font-size: 12px;
+}
+
+.msg-bubble {
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.65;
+  max-width: calc(100% - 46px);
+}
+
+.msg-bubble.ai {
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  color: var(--text);
+  border-radius: 4px 12px 12px 12px;
+}
+
+.msg-bubble.user {
+  background: var(--green);
+  color: #fff;
+  border-radius: 12px 4px 12px 12px;
+}
+
+.msg-bubble strong {
+  font-weight: 600;
+  color: var(--green-light);
+}
+
+.msg-bubble.user strong { color: rgba(255,255,255,0.95); }
+
+.msg-bubble ul {
+  margin: 8px 0 4px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.msg-bubble li { font-size: 13px; }
+
+.msg-bubble .tag {
+  display: inline-block;
+  padding: 2px 8px;
+  background: var(--green-dim);
+  border: 0.5px solid var(--border2);
+  border-radius: 20px;
+  font-size: 11px;
+  color: var(--green-light);
+  font-family: var(--mono);
+  margin: 2px 2px 2px 0;
+}
+
+.msg-meta {
+  font-size: 10px;
+  color: var(--text3);
+  margin-top: 6px;
+  font-family: var(--mono);
+}
+
+/* Typing */
+.typing-row {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.typing-dots {
+  display: flex;
+  gap: 4px;
+  padding: 12px 16px;
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: 4px 12px 12px 12px;
+}
+
+.typing-dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  animation: bounce 1.2s infinite;
+}
+
+.typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+.typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes bounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+  30% { transform: translateY(-5px); opacity: 1; }
+}
+
+/* Input area */
+.input-area {
+  padding: 16px 32px 20px;
+  border-top: 0.5px solid var(--border);
+  background: var(--bg);
+}
+
+.input-box {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+  background: var(--surface);
+  border: 0.5px solid var(--border2);
+  border-radius: 12px;
+  padding: 10px 10px 10px 16px;
+  transition: border-color 0.2s;
+}
+
+.input-box:focus-within {
+  border-color: var(--green);
+}
+
+.input-box textarea {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 14px;
+  resize: none;
+  line-height: 1.5;
+  max-height: 120px;
+  min-height: 24px;
+}
+
+.input-box textarea::placeholder { color: var(--text3); }
+
+.send-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--green);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+
+.send-btn:hover { background: var(--green-light); }
+.send-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.send-btn svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.input-hint {
+  margin-top: 8px;
+  font-size: 11px;
+  color: var(--text3);
+  font-family: var(--mono);
+  display: flex;
+  justify-content: space-between;
+}
+
+/* API key setup */
+.api-setup {
+  padding: 20px 32px;
+  background: var(--surface);
+  border-bottom: 0.5px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.api-setup p {
+  font-size: 12px;
+  color: var(--text2);
+  flex: 1;
+}
+
+.api-setup p strong { color: var(--green-light); }
+
+.api-input-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.api-input {
+  padding: 7px 12px;
+  background: var(--bg2);
+  border: 0.5px solid var(--border2);
+  border-radius: 6px;
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 12px;
+  width: 240px;
+}
+
+.api-input:focus { outline: none; border-color: var(--green); }
+
+.api-btn {
+  padding: 7px 14px;
+  background: var(--green);
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.api-btn:hover { background: var(--green-light); }
+
+.api-dismiss {
+  font-size: 11px;
+  color: var(--text3);
+  cursor: pointer;
+  font-family: var(--mono);
+  border: none;
+  background: none;
+  text-decoration: underline;
+}
+
+/* Section header in messages */
+.section-header {
+  font-size: 11px;
+  color: var(--text3);
+  font-family: var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 0;
+  border-bottom: 0.5px solid var(--border);
+  margin-bottom: 4px;
+}
+
+/* Scrollbar */
+.sidebar::-webkit-scrollbar { width: 3px; }
+.sidebar::-webkit-scrollbar-track { background: transparent; }
+.sidebar::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    </div>
+    <div class="logo-text">
+      <div class="logo-name">PropTech KB</div>
+      <div class="logo-sub">AI-ассистент · Kazakhstan</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="status-dot"></div>
+    <a href="#" class="notion-link" id="notionLink" onclick="alert('Укажи ссылку на Notion в переменной NOTION_URL в коде'); return false;">
+      ← Notion база знаний
+    </a>
+  </div>
+</div>
+
+<div class="layout">
+
+  <div class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Темы</div>
+
+      <button class="topic-btn" onclick="askTopic('Расскажи об Apartchain — первой платформе токенизации недвижимости в Казахстане: механика, регуляторная база, текущий статус')">
+        <span class="topic-icon">◈</span>
+        <div class="topic-content">
+          <div class="topic-name">Apartchain</div>
+          <div class="topic-desc">Токенизация, AIFC, пилот 2026</div>
+        </div>
+      </button>
+
+      <button class="topic-btn" onclick="askTopic('Сравни ключевые PropTech платформы: Zillow, Beike, Krisha.kz, Opendoor. Акцент на релевантности для ACB PropTech')">
+        <span class="topic-icon">≋</span>
+        <div class="topic-content">
+          <div class="topic-name">Бенчмарки</div>
+          <div class="topic-desc">Zillow, Beike, Opendoor и др.</div>
+        </div>
+      </button>
+
+      <button class="topic-btn" onclick="askTopic('Объясни глобальные тренды рынка PropTech в 2025–2026: объём рынка, инвестиции, ключевые тренды, регионы роста')">
+        <span class="topic-icon">↗</span>
+        <div class="topic-content">
+          <div class="topic-name">Рынок 2026</div>
+          <div class="topic-desc">$47B+, CAGR 16%, тренды</div>
+        </div>
+      </button>
+
+      <button class="topic-btn" onclick="askTopic('Расскажи о регуляторной среде для PropTech и токенизации в Казахстане: AIFC, AFSA, НБ РК, регуляторная песочница, роль ГЦН')">
+        <span class="topic-icon">⚖</span>
+        <div class="topic-content">
+          <div class="topic-name">Регулирование</div>
+          <div class="topic-desc">AIFC, AFSA, ГЦН, НБ РК</div>
+        </div>
+      </button>
+
+      <button class="topic-btn" onclick="askTopic('Объясни механику дробного владения недвижимостью: SPV vs токен vs REIT, как работает в мире и в Казахстане')">
+        <span class="topic-icon">⊿</span>
+        <div class="topic-content">
+          <div class="topic-name">Дробное владение</div>
+          <div class="topic-desc">SPV, токены, REIT</div>
+        </div>
+      </button>
+
+      <button class="topic-btn" onclick="askTopic('Расскажи о стратегии ACB PropTech: три волны внедрения, партнёрство с Kaspi Group, роль Krisha.kz и других партнёров')">
+        <span class="topic-icon">⬡</span>
+        <div class="topic-content">
+          <div class="topic-name">ACB PropTech стратегия</div>
+          <div class="topic-desc">Три волны, Kaspi, Krisha</div>
+        </div>
+      </button>
+
+      <button class="topic-btn" onclick="askTopic('Объясни роль AI в PropTech: от автоматической оценки (AVM) до AI-агентов. Что делают Beike, Guesty, Opendoor 2.0')">
+        <span class="topic-icon">◎</span>
+        <div class="topic-content">
+          <div class="topic-name">AI в PropTech</div>
+          <div class="topic-desc">AVM, агенты, Beike Copilot</div>
+        </div>
+      </button>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">База знаний</div>
+      <div class="quick-stats">
+        <div class="stat-mini">
+          <div class="stat-mini-val">24</div>
+          <div class="stat-mini-lbl">Документов</div>
+        </div>
+        <div class="stat-mini">
+          <div class="stat-mini-val">18</div>
+          <div class="stat-mini-lbl">Бенчмарков</div>
+        </div>
+        <div class="stat-mini">
+          <div class="stat-mini-val">42</div>
+          <div class="stat-mini-lbl">Wiki-статей</div>
+        </div>
+        <div class="stat-mini">
+          <div class="stat-mini-val">6</div>
+          <div class="stat-mini-lbl">Проектов</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="sidebar-section" style="padding-bottom: 20px;">
+      <div class="sidebar-label">Глоссарий</div>
+      <button class="topic-btn" onclick="askTopic('Объясни термины PropTech: AVM, iBuyer, SPV, RWA, GTV, ACN, ConTech, CRE, STR — кратко и понятно')">
+        <span class="topic-icon">∷</span>
+        <div class="topic-content">
+          <div class="topic-name">Термины PropTech</div>
+          <div class="topic-desc">AVM, SPV, RWA, GTV...</div>
+        </div>
+      </button>
+      <button class="topic-btn" onclick="askTopic('Объясни аббревиатуры казахстанского PropTech: AIFC, AFSA, ГЦН, НБ РК, ЦВЦБ, ЕРЦ, ДДУ')">
+        <span class="topic-icon">∷</span>
+        <div class="topic-content">
+          <div class="topic-name">Термины Казахстана</div>
+          <div class="topic-desc">AIFC, ГЦН, ЦВЦБ, ЕРЦ...</div>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <div class="chat-area">
+    <div id="apiSetup" class="api-setup">
+      <p><strong>Для работы AI-ассистента</strong> требуется Anthropic API ключ. Введи ключ ниже — он сохраняется только в этой вкладке браузера.</p>
+      <div class="api-input-row">
+        <input type="password" class="api-input" id="apiKeyInput" placeholder="sk-ant-..." onkeydown="if(event.key==='Enter')saveKey()">
+        <button class="api-btn" onclick="saveKey()">Подключить</button>
+        <button class="api-dismiss" onclick="dismissSetup()">позже</button>
+      </div>
+    </div>
+
+    <div class="messages" id="messages">
+      <div class="welcome" id="welcomeState">
+        <div class="welcome-icon">◈</div>
+        <h1>PropTech Knowledge Base</h1>
+        <p>AI-ассистент по рынку недвижимости Казахстана и глобальным PropTech трендам. Задай вопрос или выбери тему слева.</p>
+        <div class="suggestions-grid">
+          <button class="sug-card" onclick="askTopic('Что такое Apartchain и почему это важно для рынка Казахстана?')">
+            <span class="sug-card-icon">◈</span>
+            <div class="sug-card-text">Что такое Apartchain?</div>
+          </button>
+          <button class="sug-card" onclick="askTopic('Чем Beike отличается от Zillow и почему Beike релевантнее для ACB?')">
+            <span class="sug-card-icon">≋</span>
+            <div class="sug-card-text">Beike vs Zillow — главное</div>
+          </button>
+          <button class="sug-card" onclick="askTopic('Каков объём рынка PropTech в 2026 и куда идут деньги?')">
+            <span class="sug-card-icon">↗</span>
+            <div class="sug-card-text">Рынок PropTech 2026</div>
+          </button>
+          <button class="sug-card" onclick="askTopic('Объясни механику токенизации недвижимости простыми словами — шаги от объекта до токена')">
+            <span class="sug-card-icon">⊿</span>
+            <div class="sug-card-text">Как работает токенизация?</div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="input-area">
+      <div class="input-box">
+        <textarea
+          id="userInput"
+          rows="1"
+          placeholder="Задай вопрос по PropTech, Apartchain, бенчмаркам..."
+          onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMessage()}"
+          oninput="autoResize(this)"
+        ></textarea>
+        <button class="send-btn" id="sendBtn" onclick="sendMessage()" aria-label="Отправить">
+          <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>
+      <div class="input-hint">
+        <span>Enter — отправить · Shift+Enter — новая строка</span>
+        <span id="keyStatus">⬤ API не подключён</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const NOTION_URL = '';
+
+const SYSTEM_PROMPT = `Ты — AI-ассистент PropTech Knowledge Base, созданной для работы по рынку недвижимости Казахстана и глобальным PropTech трендам.
+
+КОНТЕКСТ БАЗЫ ЗНАНИЙ:
+
+Проекты:
+- Apartchain — первая платформа токенизации недвижимости в Казахстане, запущена в феврале 2026 года в рамках регуляторной песочницы Национального банка РК. Механика: дробное владение через токены RWA (Real World Assets).
+- ACB PropTech — стратегическая платформа Alatau City Bank, включающая партнёрство с Kaspi Group (Krisha.kz, Kolesa, ЕРЦ, Алсеко, Kaspi Marketplace). Три волны внедрения.
+
+Ключевые бенчмарки:
+- Zillow (США): 230M MAU, AI-поиск, Offer Insights, Portable Application, iBuyer опыт
+- Beike/Lianjia (Китай): 315M верифицированных объектов, Agent Copilot (450K агентов, 92% точность), Realsight 3D (40M объектов), 28% рынка вторички, ремонт 25% выручки
+- Opendoor (США): Opendoor 2.0 — перезапуск как AI/software компания, 300% рост покупок, цель breakeven 2026
+- Krisha.kz (Казахстан): основной партнёр ACB PropTech, доска объявлений → экосистема
+- Qualia (США): транзакционный слой — аналог связки нотариус+банк+ЦОН
+- Coadjute (UK): blockchain в транзакциях, прямой референс для Apartchain
+- Reggora (США): автоматизация оценки для ипотечного трека
+- Guesty (Израиль): STR управление, $410M, AI Revenue Agent (дек 2025), 500K объектов, 100+ стран
+- Altus Group / ARGUS (Канада): CRE аналитика, смена CEO ноябрь 2025, ARGUS Intelligence
+
+Рынок:
+- Глобальный PropTech: $47-55B в 2026, CAGR 16%, прогноз $200B+ к 2035
+- Инвестиции 2025: $16.7B — рекордный год дисциплинированных вложений в infrastructure-grade платформы
+- AI переходит из пилотов в production: Beike, Guesty, Opendoor
+- Рынок бифуцировался: лидеры компаундируют, хвост консолидируется
+
+Регулирование Казахстана:
+- AIFC (Astana International Financial Centre) — специальная юрисдикция
+- AFSA — регулятор внутри AIFC, выдаёт лицензии на цифровые активы
+- НБ РК — регуляторная песочница, в которой работает Apartchain
+- ГЦН (Государственный центр по недвижимости) — реестр прав собственности, критический барьер для токенизации
+- ЦВЦБ (цифровой тенге) — роль в расчётах по токенизированным активам
+
+Ключевые инсайты:
+- Главный барьер токенизации в Казахстане: юридическая привязка токена к ГЦН-реестру
+- Вторичный рынок токенов — нерешённая проблема глобально
+- Apartchain упомянут в Inbusiness.kz как первая платформа токенизации РК (февраль 2026)
+- Beike — стратегически ближайший бенчмарк для ACB PropTech (экосистемная модель, а не просто портал)
+
+ИНСТРУКЦИИ:
+- Отвечай на русском языке
+- Будь конкретным: цифры, факты, примеры из базы знаний
+- Структурируй ответы: используй заголовки и списки где уместно
+- Если вопрос касается стратегии — всегда привязывай к контексту ACB и Apartchain
+- Указывай, если информация может потребовать актуализации
+- Длина ответа: соразмерна вопросу. Для простых вопросов — кратко. Для аналитических — развёрнуто.`;
+
+let apiKey = sessionStorage.getItem('proptech_api_key') || '';
+let conversationHistory = [];
+let isLoading = false;
+
+function init() {
+  if (apiKey) {
+    document.getElementById('apiSetup').style.display = 'none';
+    document.getElementById('keyStatus').textContent = '⬤ AI подключён';
+    document.getElementById('keyStatus').style.color = '#1D9E75';
+  }
+  if (NOTION_URL) {
+    document.getElementById('notionLink').href = NOTION_URL;
+  }
+}
+
+function saveKey() {
+  const key = document.getElementById('apiKeyInput').value.trim();
+  if (!key.startsWith('sk-ant-') && !key.startsWith('sk-')) {
+    alert('Неверный формат ключа. Ключ должен начинаться с sk-ant-');
+    return;
+  }
+  apiKey = key;
+  sessionStorage.setItem('proptech_api_key', key);
+  document.getElementById('apiSetup').style.display = 'none';
+  document.getElementById('keyStatus').textContent = '⬤ AI подключён';
+  document.getElementById('keyStatus').style.color = '#1D9E75';
+}
+
+function dismissSetup() {
+  document.getElementById('apiSetup').style.display = 'none';
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+}
+
+function hideWelcome() {
+  const w = document.getElementById('welcomeState');
+  if (w) w.remove();
+}
+
+function addMessage(text, role) {
+  hideWelcome();
+  const container = document.getElementById('messages');
+  const row = document.createElement('div');
+  row.className = 'msg-row ' + role;
+
+  const avatar = document.createElement('div');
+  avatar.className = 'msg-avatar ' + role;
+  avatar.textContent = role === 'ai' ? 'AI' : 'Вы';
+
+  const bubble = document.createElement('div');
+  bubble.className = 'msg-bubble ' + role;
+
+  if (role === 'ai') {
+    bubble.innerHTML = formatMessage(text);
+  } else {
+    bubble.textContent = text;
+  }
+
+  row.appendChild(avatar);
+  row.appendChild(bubble);
+  container.appendChild(row);
+  container.scrollTop = container.scrollHeight;
+  return bubble;
+}
+
+function formatMessage(text) {
+  return text
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/^### (.*)/gm, '<div style="font-size:13px;font-weight:600;color:var(--green-light);margin:12px 0 6px;letter-spacing:-0.01em">$1</div>')
+    .replace(/^## (.*)/gm, '<div style="font-size:14px;font-weight:600;color:var(--text);margin:14px 0 6px">$1</div>')
+    .replace(/^- (.*)/gm, '<div style="display:flex;gap:8px;margin:3px 0"><span style="color:var(--green);flex-shrink:0;margin-top:2px">▸</span><span>$1</span></div>')
+    .replace(/\n\n/g, '<br><br>')
+    .replace(/\n(?!<)/g, '<br>');
+}
+
+function showTyping() {
+  hideWelcome();
+  const container = document.getElementById('messages');
+  const row = document.createElement('div');
+  row.className = 'typing-row';
+  row.id = 'typingIndicator';
+
+  const avatar = document.createElement('div');
+  avatar.className = 'msg-avatar ai';
+  avatar.textContent = 'AI';
+
+  const dots = document.createElement('div');
+  dots.className = 'typing-dots';
+  dots.innerHTML = '<span></span><span></span><span></span>';
+
+  row.appendChild(avatar);
+  row.appendChild(dots);
+  container.appendChild(row);
+  container.scrollTop = container.scrollHeight;
+}
+
+function hideTyping() {
+  const t = document.getElementById('typingIndicator');
+  if (t) t.remove();
+}
+
+function askTopic(text) {
+  document.getElementById('userInput').value = text;
+  sendMessage();
+}
+
+async function sendMessage() {
+  const input = document.getElementById('userInput');
+  const text = input.value.trim();
+  if (!text || isLoading) return;
+
+  if (!apiKey) {
+    document.getElementById('apiSetup').style.display = 'flex';
+    document.getElementById('apiKeyInput').focus();
+    return;
+  }
+
+  input.value = '';
+  input.style.height = 'auto';
+  isLoading = true;
+  document.getElementById('sendBtn').disabled = true;
+
+  addMessage(text, 'user');
+  conversationHistory.push({ role: 'user', content: text });
+  showTyping();
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1500,
+        system: SYSTEM_PROMPT,
+        messages: conversationHistory
+      })
+    });
+
+    if (!response.ok) {
+      const err = await response.json();
+      throw new Error(err.error?.message || 'API error ' + response.status);
+    }
+
+    const data = await response.json();
+    const reply = data.content[0].text;
+    hideTyping();
+    addMessage(reply, 'ai');
+    conversationHistory.push({ role: 'assistant', content: reply });
+
+  } catch (err) {
+    hideTyping();
+    if (err.message.includes('401') || err.message.includes('auth')) {
+      addMessage('Ошибка авторизации. Проверь API ключ — он должен начинаться с sk-ant-api03-...', 'ai');
+      apiKey = '';
+      sessionStorage.removeItem('proptech_api_key');
+      document.getElementById('apiSetup').style.display = 'flex';
+      document.getElementById('keyStatus').textContent = '⬤ API не подключён';
+      document.getElementById('keyStatus').style.color = '';
+    } else {
+      addMessage('Ошибка: ' + err.message, 'ai');
+    }
+  }
+
+  isLoading = false;
+  document.getElementById('sendBtn').disabled = false;
+  input.focus();
+}
+
+init();
+</script>
+</body>
+</html>
