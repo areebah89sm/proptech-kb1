@@ -1,0 +1,2059 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PropTech Knowledge Base — Alatau City</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #002a59;
+  --ink2: #00345b;
+  --ink3: #014f85;
+  --ink4: #5a8ab0;
+  --paper: #f4f7fb;
+  --paper2: #e8f0f8;
+  --paper3: #d0e0ef;
+  --green: #014f85;
+  --green2: #0b8792;
+  --green3: #0b9e92;
+  --green-pale: #e0f3f5;
+  --green-pale2: #b8e6ea;
+  --accent: #0b8792;
+  --accent-pale: #e0f3f5;
+  --border: #c8d8e8;
+  --border2: rgba(1,79,133,0.2);
+  --shadow: 0 2px 12px rgba(0,42,89,0.08);
+  --shadow2: 0 8px 32px rgba(0,42,89,0.15);
+  --r: 8px;
+  --r2: 12px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Golos Text', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── LAYOUT ── */
+.app { display: flex; height: 100vh; overflow: hidden; }
+
+/* ── SIDEBAR ── */
+.sidebar {
+  width: 260px;
+  min-width: 260px;
+  background: #002a59;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  position: relative;
+  z-index: 10;
+}
+
+.sidebar-logo {
+  padding: 22px 20px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.logo-mark {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.logo-icon {
+  width: 36px;
+  height: 36px;
+  background: var(--green);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.logo-text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.2;
+}
+
+.logo-sub {
+  font-size: 10px;
+  color: rgba(255,255,255,0.4);
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.sidebar-search {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.sidebar-search input {
+  width: 100%;
+  padding: 8px 12px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 6px;
+  color: #fff;
+  font-size: 13px;
+  font-family: 'Golos Text', sans-serif;
+  outline: none;
+}
+
+.sidebar-search input::placeholder { color: rgba(255,255,255,0.35); }
+.sidebar-search input:focus { border-color: var(--green3); background: rgba(255,255,255,0.1); }
+
+.nav-section { padding: 8px 0; }
+
+.nav-label {
+  font-size: 9px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
+  padding: 6px 20px 4px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 20px;
+  cursor: pointer;
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+  transition: all 0.15s;
+  border-left: 3px solid transparent;
+}
+
+.nav-item:hover { color: #fff; background: rgba(255,255,255,0.05); }
+.nav-item.active { color: #fff; background: rgba(11,135,146,0.2); border-left-color: #0b8792; font-weight: 500; }
+
+.nav-item .ni { font-size: 15px; width: 18px; text-align: center; flex-shrink: 0; }
+
+.nav-sub {
+  padding: 5px 20px 5px 48px;
+  cursor: pointer;
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+  transition: all 0.15s;
+  border-left: 3px solid transparent;
+}
+
+.nav-sub:hover { color: rgba(255,255,255,0.7); }
+.nav-sub.active { color: var(--green3); }
+
+.sidebar-divider { height: 1px; background: rgba(255,255,255,0.06); margin: 6px 0; }
+
+.ai-trigger {
+  margin: auto 12px 16px;
+  padding: 11px 14px;
+  background: var(--green);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-family: 'Golos Text', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: calc(100% - 24px);
+  transition: background 0.15s;
+}
+
+.ai-trigger:hover { background: var(--green2); }
+.ai-trigger .pulse { width: 7px; height: 7px; border-radius: 50%; background: #5dea9a; animation: pulse 2s infinite; flex-shrink: 0; }
+
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+
+/* ── MAIN ── */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.topbar {
+  padding: 0 32px;
+  height: 56px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--paper);
+  flex-shrink: 0;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--ink3);
+}
+
+.breadcrumb span { color: var(--ink4); }
+.breadcrumb a { color: var(--ink3); cursor: pointer; }
+.breadcrumb a:hover { color: var(--green); }
+.breadcrumb strong { color: var(--ink); font-weight: 500; }
+
+.topbar-actions { display: flex; gap: 8px; }
+
+.tbtn {
+  padding: 6px 14px;
+  font-size: 12px;
+  font-family: 'Golos Text', sans-serif;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--ink3);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.15s;
+}
+
+.tbtn:hover { border-color: var(--green); color: var(--green); }
+.tbtn.primary { background: var(--green); color: #fff; border-color: var(--green); }
+.tbtn.primary:hover { background: var(--green2); }
+
+/* ── CONTENT AREA ── */
+.content { flex: 1; overflow-y: auto; }
+
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* ── HOME ── */
+.hero {
+  background: linear-gradient(135deg, #002a59 0%, #00345b 60%, #014f85 100%);
+  padding: 48px 48px 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  right: -60px;
+  top: -60px;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(74,158,114,0.15) 0%, transparent 70%);
+}
+
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  background: rgba(74,158,114,0.2);
+  border: 1px solid rgba(74,158,114,0.3);
+  border-radius: 20px;
+  font-size: 11px;
+  color: var(--green3);
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 0.05em;
+  margin-bottom: 16px;
+}
+
+.hero h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.2;
+  margin-bottom: 12px;
+  max-width: 600px;
+}
+
+.hero p {
+  font-size: 15px;
+  color: rgba(255,255,255,0.6);
+  max-width: 540px;
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 32px;
+}
+
+.hero-stat .val {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--green3);
+}
+
+.hero-stat .lbl {
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+  margin-top: 2px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.home-content { padding: 36px 48px; }
+
+.section-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.section-sub {
+  font-size: 13px;
+  color: var(--ink3);
+  margin-bottom: 20px;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+  margin-bottom: 40px;
+}
+
+.nav-card {
+  padding: 20px;
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--green);
+  transform: scaleX(0);
+  transition: transform 0.2s;
+}
+
+.nav-card:hover { border-color: var(--green3); transform: translateY(-2px); box-shadow: var(--shadow2); }
+.nav-card:hover::after { transform: scaleX(1); }
+
+.nav-card-icon { font-size: 24px; margin-bottom: 10px; }
+.nav-card-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+.nav-card-desc { font-size: 12px; color: var(--ink3); line-height: 1.4; }
+.nav-card-count { font-size: 11px; color: var(--green2); margin-top: 8px; font-weight: 500; font-family: 'Montserrat', sans-serif; }
+
+.key-facts {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+.fact-card {
+  background: var(--paper2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 16px;
+}
+
+.fact-val {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--green);
+  margin-bottom: 4px;
+}
+
+.fact-lbl { font-size: 11px; color: var(--ink3); line-height: 1.4; }
+.fact-src { font-size: 10px; color: var(--ink4); margin-top: 6px; font-family: 'Montserrat', sans-serif; }
+
+/* ── WIKI ARTICLE LAYOUT ── */
+.wiki-layout {
+  display: flex;
+  height: 100%;
+}
+
+.wiki-toc {
+  width: 220px;
+  min-width: 220px;
+  border-right: 1px solid var(--border);
+  padding: 24px 0;
+  background: var(--paper);
+  overflow-y: auto;
+  position: sticky;
+  top: 0;
+  height: calc(100vh - 56px);
+}
+
+.toc-title {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--ink4);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
+  padding: 0 20px;
+  margin-bottom: 12px;
+}
+
+.toc-item {
+  display: block;
+  padding: 7px 20px;
+  font-size: 12px;
+  color: var(--ink3);
+  cursor: pointer;
+  border-left: 3px solid transparent;
+  transition: all 0.15s;
+  text-decoration: none;
+}
+
+.toc-item:hover { color: var(--green); background: var(--green-pale); }
+.toc-item.active { color: var(--green); border-left-color: var(--green); background: var(--green-pale); font-weight: 500; }
+.toc-item.h3 { padding-left: 32px; font-size: 11px; color: var(--ink4); }
+
+.wiki-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 40px 56px 60px;
+  max-width: 860px;
+}
+
+.wiki-header { margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
+
+.wiki-tags { display: flex; gap: 6px; margin-bottom: 12px; }
+
+.wiki-tag {
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.tag-green { background: var(--green-pale); color: var(--green); }
+.tag-amber { background: var(--accent-pale); color: var(--accent); }
+.tag-blue { background: #e6f1fb; color: #1456a0; }
+.tag-gray { background: var(--paper3); color: var(--ink3); }
+
+.wiki-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.25;
+  margin-bottom: 10px;
+}
+
+.wiki-lead {
+  font-size: 15px;
+  color: var(--ink2);
+  line-height: 1.7;
+}
+
+.wiki-h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 36px 0 14px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--green-pale2);
+}
+
+.wiki-h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--green2);
+  margin: 24px 0 10px;
+}
+
+.wiki-p {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--ink2);
+  margin-bottom: 14px;
+}
+
+.wiki-ul {
+  margin: 10px 0 16px 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.wiki-ul li {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--ink2);
+  padding: 4px 0 4px 20px;
+  position: relative;
+}
+
+.wiki-ul li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--green);
+}
+
+.wiki-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0 24px;
+  font-size: 13px;
+}
+
+.wiki-table th {
+  background: #014f85;
+  color: #fff;
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 600;
+}
+
+.wiki-table td {
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--ink2);
+  vertical-align: top;
+  line-height: 1.5;
+}
+
+.wiki-table tr:nth-child(even) td { background: var(--paper2); }
+.wiki-table tr:hover td { background: var(--green-pale); }
+
+.callout {
+  background: var(--green-pale);
+  border-left: 4px solid var(--green);
+  border-radius: 0 var(--r) var(--r) 0;
+  padding: 14px 18px;
+  margin: 16px 0 20px;
+  font-size: 14px;
+  color: var(--ink2);
+  line-height: 1.6;
+}
+
+.callout.amber {
+  background: var(--accent-pale);
+  border-left-color: var(--accent);
+}
+
+.callout strong { color: var(--green2); }
+.callout.amber strong { color: var(--accent); }
+
+.wiki-link {
+  color: var(--green2);
+  text-decoration: none;
+  border-bottom: 1px solid var(--green-pale2);
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.wiki-link:hover { border-bottom-color: var(--green); }
+
+/* ── DOCS LIST ── */
+.docs-panel { padding: 36px 48px; }
+
+.docs-filters { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+
+.filter-chip {
+  padding: 5px 14px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-size: 12px;
+  color: var(--ink3);
+  cursor: pointer;
+  background: transparent;
+  font-family: 'Golos Text', sans-serif;
+  transition: all 0.15s;
+}
+
+.filter-chip:hover { border-color: var(--green); color: var(--green); }
+.filter-chip.on { background: var(--green); color: #fff; border-color: var(--green); }
+
+.docs-grid { display: flex; flex-direction: column; gap: 10px; }
+
+.doc-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 18px;
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  transition: all 0.15s;
+}
+
+.doc-row:hover { border-color: var(--green3); box-shadow: var(--shadow); }
+
+.doc-type-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.icon-pdf { background: #fde8e8; }
+.icon-docx { background: #e8eeff; }
+.icon-pptx { background: #fef3e0; }
+
+.doc-info { flex: 1; }
+.doc-name { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 4px; }
+.doc-meta { font-size: 12px; color: var(--ink3); }
+
+.doc-cat {
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.doc-download {
+  padding: 6px 14px;
+  background: var(--green-pale);
+  border: 1px solid var(--green-pale2);
+  border-radius: 6px;
+  color: var(--green2);
+  font-size: 12px;
+  cursor: pointer;
+  font-family: 'Golos Text', sans-serif;
+  text-decoration: none;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.doc-download:hover { background: var(--green); color: #fff; border-color: var(--green); }
+
+/* ── BENCHMARKS ── */
+.bench-panel { padding: 36px 48px; }
+
+.bench-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+
+.bench-card {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.bench-card:hover { border-color: var(--green3); transform: translateY(-2px); box-shadow: var(--shadow2); }
+
+.bench-head { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 12px; }
+.bench-name { font-size: 15px; font-weight: 600; color: var(--ink); }
+.bench-country { font-size: 11px; color: var(--ink4); margin-top: 2px; }
+
+.rel-badge {
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.rel-5 { background: var(--green-pale); color: var(--green); }
+.rel-4 { background: #e8f4fb; color: #1456a0; }
+.rel-3 { background: var(--accent-pale); color: var(--accent); }
+.rel-2 { background: var(--paper3); color: var(--ink3); }
+
+.bench-rows { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+.bench-row { display: flex; justify-content: space-between; font-size: 12px; }
+.bench-row-lbl { color: var(--ink4); }
+.bench-row-val { color: var(--ink); font-weight: 500; text-align: right; max-width: 55%; }
+.bench-note { font-size: 12px; color: var(--ink3); line-height: 1.4; padding-top: 10px; border-top: 1px solid var(--border); }
+
+/* ── AI CHAT ── */
+.ai-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,26,15,0.5);
+  z-index: 100;
+  display: none;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 20px;
+}
+
+.ai-overlay.open { display: flex; }
+
+.ai-window {
+  width: 440px;
+  height: 600px;
+  background: var(--paper);
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(15,26,15,0.25);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: slideUp 0.25s ease;
+}
+
+@keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+.ai-header {
+  padding: 16px 20px;
+  background: #002a59;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ai-header-left { display: flex; align-items: center; gap: 10px; }
+.ai-avatar { width: 34px; height: 34px; border-radius: 10px; background: var(--green); display: flex; align-items: center; justify-content: center; font-size: 16px; }
+.ai-name { font-size: 14px; font-weight: 600; color: #fff; }
+.ai-status { font-size: 11px; color: rgba(255,255,255,0.5); font-family: 'Montserrat', sans-serif; }
+
+.ai-close {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.5);
+  cursor: pointer;
+  font-size: 20px;
+  padding: 4px;
+  transition: color 0.15s;
+}
+
+.ai-close:hover { color: #fff; }
+
+.ai-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.ai-welcome {
+  text-align: center;
+  padding: 20px;
+  color: var(--ink3);
+}
+
+.ai-welcome .aw-icon { font-size: 32px; margin-bottom: 10px; }
+.ai-welcome p { font-size: 13px; line-height: 1.6; }
+
+.ai-suggestions { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 20px 12px; }
+
+.ai-sug {
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-size: 12px;
+  color: var(--ink3);
+  cursor: pointer;
+  background: transparent;
+  font-family: 'Golos Text', sans-serif;
+  transition: all 0.15s;
+  text-align: left;
+}
+
+.ai-sug:hover { border-color: var(--green); color: var(--green); background: var(--green-pale); }
+
+.msg { max-width: 90%; display: flex; gap: 8px; align-items: flex-start; }
+.msg.user { align-self: flex-end; flex-direction: row-reverse; }
+
+.msg-av {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+.msg-av.ai { background: var(--green); color: #fff; font-family: 'Montserrat', sans-serif; font-size: 10px; }
+.msg-av.user { background: var(--paper3); color: var(--ink3); }
+
+.msg-bubble {
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.msg-bubble.ai { background: var(--paper2); border: 1px solid var(--border); color: var(--ink); border-radius: 4px 12px 12px 12px; }
+.msg-bubble.user { background: var(--green); color: #fff; border-radius: 12px 4px 12px 12px; }
+.msg-bubble.ai strong { color: var(--green2); font-weight: 600; }
+.msg-bubble.ai em { color: var(--ink3); }
+
+.typing-ind { display: flex; gap: 4px; padding: 12px 16px; background: var(--paper2); border: 1px solid var(--border); border-radius: 4px 12px 12px 12px; align-self: flex-start; }
+.typing-ind span { width: 6px; height: 6px; border-radius: 50%; background: var(--green3); animation: tdot 1.2s infinite; }
+.typing-ind span:nth-child(2) { animation-delay: 0.2s; }
+.typing-ind span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes tdot { 0%,60%,100%{transform:translateY(0);opacity:0.4} 30%{transform:translateY(-5px);opacity:1} }
+
+.ai-input-area {
+  padding: 12px 16px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+.ai-input-area textarea {
+  flex: 1;
+  padding: 9px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: 'Golos Text', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  resize: none;
+  outline: none;
+  max-height: 100px;
+  line-height: 1.5;
+}
+
+.ai-input-area textarea:focus { border-color: var(--green3); }
+
+.ai-send {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  background: var(--green);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s;
+  font-size: 16px;
+}
+
+.ai-send:hover { background: var(--green2); }
+.ai-send:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* ── SCROLLBARS ── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* ── WIKI SECTIONS ── */
+.wiki-section-list { display: flex; flex-direction: column; gap: 10px; padding: 36px 48px; }
+
+.ws-item {
+  display: flex;
+  gap: 16px;
+  padding: 16px 20px;
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.ws-item:hover { border-color: var(--green3); background: var(--green-pale); }
+.ws-num { font-family: 'Montserrat', sans-serif; font-size: 24px; color: var(--green3); font-weight: 700; width: 32px; flex-shrink: 0; }
+.ws-content { flex: 1; }
+.ws-title { font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+.ws-excerpt { font-size: 13px; color: var(--ink3); line-height: 1.5; }
+.ws-tags { display: flex; gap: 6px; margin-top: 8px; }
+
+</style>
+</head>
+<body>
+
+<div class="app">
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-mark">
+      <div class="logo-icon" style="background:#0b8792;font-weight:800;font-size:13px;letter-spacing:-0.5px;color:#fff;font-family:Montserrat,sans-serif;">S</div>
+      <div>
+        <div class="logo-text">PropTech Knowledge Base</div>
+      </div>
+    </div>
+    <div class="logo-sub">Alatau City</div>
+  </div>
+
+  <div class="sidebar-search">
+    <input type="text" placeholder="🔍  Поиск по базе знаний..." id="globalSearch" oninput="handleSearch(this.value)">
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Главная</div>
+    <div class="nav-item active" onclick="showPanel('home',this)">
+      <span class="ni">🏠</span> Обзор базы знаний
+    </div>
+  </div>
+
+  <div class="sidebar-divider"></div>
+
+  <div class="nav-section">
+    <div class="nav-label">Разделы</div>
+    <div class="nav-item" onclick="showPanel('world',this)">
+      <span class="ni">🌍</span> Мировой рынок PropTech
+    </div>
+    <div class="nav-sub" onclick="showPanel('world',this);scrollToSection('benchmarks-section')">→ Объём и динамика</div>
+    <div class="nav-sub" onclick="showPanel('world',this);scrollToSection('contech-section')">→ ConTech тренды</div>
+    <div class="nav-item" onclick="showPanel('kazakhstan',this)">
+      <span class="ni">🇰🇿</span> Рынок Казахстана
+    </div>
+    <div class="nav-sub" onclick="showPanel('kazakhstan',this)">→ Макроэкономика</div>
+    <div class="nav-sub" onclick="showPanel('kazakhstan',this);scrollToSection('kz-alatau')">→ Alatau City</div>
+    <div class="nav-item" onclick="showPanel('sociology',this)">
+      <span class="ni">👥</span> Социология и экономика
+    </div>
+    <div class="nav-item" onclick="showPanel('ecosystem',this)">
+      <span class="ni">⚙️</span> Архитектура экосистемы
+    </div>
+    <div class="nav-sub" onclick="showPanel('ecosystem',this)">→ Клиентский путь</div>
+    <div class="nav-sub" onclick="showPanel('ecosystem',this);scrollToSection('eco-services')">→ Ключевые сервисы</div>
+    <div class="nav-item" onclick="showPanel('benchmarks',this)">
+      <span class="ni">📊</span> Мировые бенчмарки
+    </div>
+    <div class="nav-item" onclick="showPanel('docs',this)">
+      <span class="ni">📁</span> Документы и презентации
+    </div>
+  </div>
+
+  <div class="sidebar-divider"></div>
+
+  <button class="ai-trigger" onclick="openAI()">
+    <div class="pulse"></div>
+    Спросить AI-ассистента
+  </button>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="topbar">
+    <div class="breadcrumb" id="breadcrumb">
+      <strong>PropTech Knowledge Base</strong>
+    </div>
+    <div class="topbar-actions">
+      <button class="tbtn" onclick="openAI()">🤖 AI-чат</button>
+      <button class="tbtn primary" onclick="showPanel('docs',document.querySelector('.nav-item:nth-child(6)'))">📁 Все документы</button>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- HOME -->
+    <div class="panel active" id="panel-home">
+      <div class="hero">
+        <div class="hero-tag">
+          <span>●</span> Актуально · май 2026
+        </div>
+        <h1>PropTech Knowledge Base</h1>
+        <p>Центральный хаб знаний по трансформации рынка недвижимости Казахстана. Исследования, стратегия, бенчмарки и документы Alatau City Bank.</p>
+        <div class="hero-stats">
+          <div class="hero-stat"><div class="val">$393 трлн</div><div class="lbl">Мировой рынок недвижимости</div></div>
+          <div class="hero-stat"><div class="val">$47 млрд</div><div class="lbl">Рынок PropTech 2025</div></div>
+          <div class="hero-stat"><div class="val">12 трлн ₸</div><div class="lbl">Рынок РК (оборот)</div></div>
+          <div class="hero-stat"><div class="val">25 файлов</div><div class="lbl">В базе документов</div></div>
+        </div>
+      </div>
+
+      <div class="home-content">
+        <div class="section-title">Навигация по базе</div>
+        <div class="section-sub">Выбери раздел для изучения</div>
+
+        <div class="cards-grid">
+          <div class="nav-card" onclick="showPanel('world',null)">
+            <div class="nav-card-icon">🌍</div>
+            <div class="nav-card-title">Мировой рынок PropTech</div>
+            <div class="nav-card-desc">Объём $47 млрд, тренды 4.0, лучшие практики Zillow, Beike, DLD, DBS</div>
+            <div class="nav-card-count">→ 8 разделов Wiki</div>
+          </div>
+          <div class="nav-card" onclick="showPanel('kazakhstan',null)">
+            <div class="nav-card-icon">🇰🇿</div>
+            <div class="nav-card-title">Рынок Казахстана</div>
+            <div class="nav-card-desc">12 трлн ₸, 68% серых схем, Alatau City как Digital by default</div>
+            <div class="nav-card-count">→ 6 разделов Wiki</div>
+          </div>
+          <div class="nav-card" onclick="showPanel('sociology',null)">
+            <div class="nav-card-icon">👥</div>
+            <div class="nav-card-title">Социология и экономика</div>
+            <div class="nav-card-desc">Опрос 8000 чел., жилищные условия, планы приобретения, строительный рынок</div>
+            <div class="nav-card-count">→ 4 исследования</div>
+          </div>
+          <div class="nav-card" onclick="showPanel('ecosystem',null)">
+            <div class="nav-card-icon">⚙️</div>
+            <div class="nav-card-title">Архитектура экосистемы</div>
+            <div class="nav-card-desc">5 этапов клиентского пути, 8 функциональных блоков, Unified ID, ConTech</div>
+            <div class="nav-card-count">→ Операционный контур</div>
+          </div>
+          <div class="nav-card" onclick="showPanel('benchmarks',null)">
+            <div class="nav-card-icon">📊</div>
+            <div class="nav-card-title">Мировые бенчмарки</div>
+            <div class="nav-card-desc">Zillow, Beike, Домклик, Dubai Land Department, DBS Bank и другие</div>
+            <div class="nav-card-count">→ 10 компаний</div>
+          </div>
+          <div class="nav-card" onclick="showPanel('docs',null)">
+            <div class="nav-card-icon">📁</div>
+            <div class="nav-card-title">Документы и презентации</div>
+            <div class="nav-card-desc">White papers, стратегии, социология, финансовая архитектура</div>
+            <div class="nav-card-count">→ 25 файлов</div>
+          </div>
+        </div>
+
+        <div class="section-title">Ключевые цифры</div>
+        <div class="section-sub">Факты из исследований Sana Holding и мировых источников</div>
+
+        <div class="key-facts">
+          <div class="fact-card">
+            <div class="fact-val">68%</div>
+            <div class="fact-lbl">Сделок по долевому строительству идут по серым схемам</div>
+            <div class="fact-src">Казахстанская жилищная компания</div>
+          </div>
+          <div class="fact-card">
+            <div class="fact-val">47%</div>
+            <div class="fact-lbl">Казахстанцев планируют купить жильё в ближайшие 5 лет</div>
+            <div class="fact-src">Опрос Adam Research, 8000 чел.</div>
+          </div>
+          <div class="fact-card">
+            <div class="fact-val">70%</div>
+            <div class="fact-lbl">Молодёжи до 29 лет без жилья планируют покупку в 5-летней перспективе</div>
+            <div class="fact-src">Adam Research, 2023</div>
+          </div>
+          <div class="fact-card">
+            <div class="fact-val">16,4%</div>
+            <div class="fact-lbl">CAGR рынка PropTech — быстрее финтека и e-commerce</div>
+            <div class="fact-src">Precedence Research, 2026</div>
+          </div>
+          <div class="fact-card">
+            <div class="fact-val">24,5 м²</div>
+            <div class="fact-lbl">На человека в РК при норме ООН 30 м²</div>
+            <div class="fact-src">Стратегия PropTech ACB</div>
+          </div>
+          <div class="fact-card">
+            <div class="fact-val">5%</div>
+            <div class="fact-lbl">Проникновение ипотеки в ВВП РК (в десятки раз ниже развитых стран)</div>
+            <div class="fact-src">White paper ACB, 2026</div>
+          </div>
+          <div class="fact-card">
+            <div class="fact-val">3,1×</div>
+            <div class="fact-lbl">Больше критиков госинститутов среди людей с плохим жильём</div>
+            <div class="fact-src">Социология Adam Research</div>
+          </div>
+          <div class="fact-card">
+            <div class="fact-val">8%</div>
+            <div class="fact-lbl">Целевая доля адресуемого рынка к 2031 = 210–280 млрд ₸ выручки</div>
+            <div class="fact-src">Дорожная карта Sana Holding</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WORLD MARKET -->
+    <div class="panel" id="panel-world">
+      <div class="wiki-layout">
+        <div class="wiki-toc">
+          <div class="toc-title">Содержание</div>
+          <a class="toc-item active" onclick="scrollToSection('w1')">1. Масштаб рынка</a>
+          <a class="toc-item" onclick="scrollToSection('w2')">2. Динамика PropTech</a>
+          <a class="toc-item" onclick="scrollToSection('w3')">3. PropTech 4.0</a>
+          <a class="toc-item" onclick="scrollToSection('contech-section')">4. ConTech</a>
+          <a class="toc-item" onclick="scrollToSection('benchmarks-section')">5. Лучшие практики</a>
+          <a class="toc-item" onclick="scrollToSection('w6')">6. Выводы</a>
+        </div>
+        <div class="wiki-body" id="world-body">
+          <div class="wiki-header">
+            <div class="wiki-tags">
+              <span class="wiki-tag tag-green">Мировой рынок</span>
+              <span class="wiki-tag tag-blue">Аналитика</span>
+              <span class="wiki-tag tag-gray">Precedence Research</span>
+            </div>
+            <div class="wiki-title">Мировой рынок PropTech</div>
+            <div class="wiki-lead">Недвижимость — финансовый фундамент глобальной экономики стоимостью $393,3 трлн. При этом менее 3% стоимости цепочки сделок создаётся технологическими компаниями. Это крупнейшая нецифровизированная отрасль с CAGR роста PropTech 16,4%.</div>
+          </div>
+
+          <div id="w1" class="wiki-h2">1. Масштаб мирового рынка недвижимости</div>
+          <table class="wiki-table">
+            <tr><th>Показатель</th><th>Значение</th><th>Источник</th></tr>
+            <tr><td>Мировой рынок недвижимости</td><td>~$393,3 трлн</td><td>Savills World Research, 2023</td></tr>
+            <tr><td>Доля PropTech в оцифровке</td><td>&lt;3%</td><td>McKinsey Global Institute</td></tr>
+            <tr><td>Рынок PropTech (2025)</td><td>$47,08 млрд</td><td>Precedence Research, 2026</td></tr>
+            <tr><td>Рынок PropTech (2034, прогноз)</td><td>$185,31 млрд</td><td>CAGR 16,4% в год</td></tr>
+            <tr><td>Рынок ConTech (к 2030)</td><td>$2,3 трлн</td><td>McKinsey / Bain</td></tr>
+            <tr><td>Пик инвестиций в PropTech</td><td>&gt;$50 млрд (2021)</td><td>Pitchbook / McKinsey</td></tr>
+            <tr><td>Восстановление инвестиций</td><td>+32,5% (2024)</td><td>CRETI, 2024</td></tr>
+            <tr><td>Глобальный рынок строительства</td><td>$13 трлн → $22 трлн к 2040</td><td>McKinsey, CAGR 3,14%</td></tr>
+            <tr><td>Число PropTech-стартапов</td><td>&gt;10 000</td><td>Expert Market Research, 2024</td></tr>
+          </table>
+
+          <div class="callout">
+            <strong>Ключевой инсайт:</strong> недвижимость формирует 13% мирового ВВП, но 97% экономики этой отрасли ведётся методами XX века. Именно это создаёт колоссальное пространство для PropTech-трансформации.
+          </div>
+
+          <div id="w2" class="wiki-h2">2. Динамика и инвестиции PropTech</div>
+          <p class="wiki-p">Мировой рынок PropTech демонстрирует одну из самых высоких скоростей роста среди технологических секторов. Для сравнения: рынок финтех растёт ~15% в год, e-commerce — ~8%. PropTech с CAGR 16,4% опережает обоих.</p>
+          <p class="wiki-p">После пика инвестиций в 2021 году ($50+ млрд) последовала коррекция, но в 2024 году зафиксировано восстановление на +32,5% — рынок переходит к зрелой, дисциплинированной фазе: деньги идут в <a class="wiki-link" onclick="showPanel('benchmarks',null)">infrastructure-grade платформы</a>, а не в эксперименты.</p>
+
+          <div id="w3" class="wiki-h2">3. PropTech 4.0 — переход к умным экосистемам</div>
+          <p class="wiki-p">Глобальные тренды указывают на переход от точечных цифровых инструментов (PropTech 2.0–3.0) к интеллектуальным экосистемам фазы 4.0, где AI, блокчейн, IoT и глубокая интеграция финансовых сервисов (FinProp) создают бесшовную среду.</p>
+
+          <table class="wiki-table">
+            <tr><th>Поколение</th><th>Характеристика</th><th>Примеры</th></tr>
+            <tr><td>PropTech 1.0</td><td>Листинги и доски объявлений онлайн</td><td>Ранние порталы недвижимости</td></tr>
+            <tr><td>PropTech 2.0</td><td>Маркетплейсы с аналитикой и AVM</td><td>Zillow Zestimate, Krisha.kz</td></tr>
+            <tr><td>PropTech 3.0</td><td>Вертикальная интеграция: поиск + сделка + ипотека</td><td>Домклик/Сбер, REA Group</td></tr>
+            <tr><td>PropTech 4.0</td><td>Полная экосистема: AI + блокчейн + IoT + FinProp</td><td>DBS Bank, Dubai REST, Beike</td></tr>
+          </table>
+
+          <div class="callout">
+            <strong>Нерешённая задача:</strong> ни Zillow, ни Домклик, ни Dubai Land Department, ни DBS Bank пока не построили полную модель «строительство + финансы + сервис» — и именно эту нишу должна занять <a class="wiki-link" onclick="showPanel('ecosystem',null)">PropTech-экосистема Alatau City</a>.
+          </div>
+
+          <div id="contech-section" class="wiki-h2">4. ConTech — технологический фундамент PropTech</div>
+          <p class="wiki-p">Строительство формирует 13% мирового ВВП, но производительность труда в секторе росла лишь 1% в год за последние 20 лет при среднемировом показателе 2,8%. Этот разрыв — колоссальный скрытый резерв.</p>
+
+          <table class="wiki-table">
+            <tr><th>Страна</th><th>Подход</th><th>Результат</th></tr>
+            <tr><td>Сингапур</td><td>Модульное строительство обязательно для соцжилья с 2014 г.</td><td>39% охвата к 2020 г., +50% производительности труда</td></tr>
+            <tr><td>Швеция</td><td>&gt;30% нового жилья строится модульно</td><td>Снижение расходов на 19%, устранение погодных рисков</td></tr>
+            <tr><td>Мир (прогноз)</td><td>Рост рынка модульного строительства</td><td>$180 млрд (2022) → $540 млрд (2040)</td></tr>
+          </table>
+
+          <div id="benchmarks-section" class="wiki-h2">5. Лучшие мировые практики</div>
+          <p class="wiki-p">Среди глобальных игроков можно выделить несколько знаковых решений, ставших эталонами для индустрии:</p>
+
+          <table class="wiki-table">
+            <tr><th>Компания / Страна</th><th>Ключевой урок</th></tr>
+            <tr><td><strong>DBS Bank (Сингапур)</strong></td><td>B2C + B2B экосистема: маркетплейс для покупателей + ESG-кредиты и GenAI-скоринг для застройщиков. Лучший PropTech-банк АТР 2025. Двусторонняя платформа создаёт самоускоряющийся сетевой эффект.</td></tr>
+            <tr><td><strong>Domclick / Сбербанк (Россия)</strong></td><td>Банк как PropTech-оператор: единое окно от поиска до регистрации. 8 млн сделок/год, 30% — без ипотеки. Электронная регистрация 1–3 дня вместо 10–14. Ближайшая применимая модель для ACB.</td></tr>
+            <tr><td><strong>Zillow (США)</strong></td><td>Housing Super App: поиск + ипотека + аренда. Маржа >75%, рост ипотечных выдач +53% (2025). PropTech побеждает как платформа, а не как владелец активов.</td></tr>
+            <tr><td><strong>Dubai Land Department (ОАЭ)</strong></td><td>Государственная PropTech-экосистема: обязательное эскроу для off-plan, токенизация от $136, дистанционная регистрация через REES. Результат: 158 000 сделок за 9 мес. 2025 г. на $136 млрд (+32% г/г). Прямой аналог для Alatau City.</td></tr>
+            <tr><td><strong>REA Group (Австралия)</strong></td><td>Информационный портал → финансовый инструмент. EBITDA >60% — монетизация данных о поведении пользователей.</td></tr>
+          </table>
+
+          <div id="w6" class="wiki-h2">6. Выводы</div>
+          <ul class="wiki-ul">
+            <li>PropTech — самый быстрорастущий технологический сектор в недвижимости (CAGR 16,4%)</li>
+            <li>Нет ни одного глобального игрока, реализовавшего полную модель «строительство + финансы + сервис»</li>
+            <li>ConTech — необходимое условие масштабируемости: без цифровой трансформации строительства надстроечные сервисы упираются в стену низкой производительности</li>
+            <li>Банки трансформируются из поставщиков ликвидности в операторов жизненного цикла жилья</li>
+            <li><a class="wiki-link" onclick="showPanel('ecosystem',null)">Alatau City</a> — уникальная возможность занять нишу полноцикловой экосистемы с законодательным фундаментом</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- KAZAKHSTAN -->
+    <div class="panel" id="panel-kazakhstan">
+      <div class="wiki-layout">
+        <div class="wiki-toc">
+          <div class="toc-title">Содержание</div>
+          <a class="toc-item active" onclick="scrollToSection('kz1')">1. Макроэкономика</a>
+          <a class="toc-item" onclick="scrollToSection('kz2')">2. Структурные проблемы</a>
+          <a class="toc-item" onclick="scrollToSection('kz3')">3. Потребительский рынок</a>
+          <a class="toc-item" onclick="scrollToSection('kz4')">4. Ипотека</a>
+          <a class="toc-item" onclick="scrollToSection('kz-alatau')">5. Alatau City</a>
+          <a class="toc-item" onclick="scrollToSection('kz6')">6. Правовая база</a>
+
+        </div>
+        <div class="wiki-body">
+          <div class="wiki-header">
+            <div class="wiki-tags">
+              <span class="wiki-tag tag-green">Казахстан</span>
+              <span class="wiki-tag tag-amber">Alatau City</span>
+              <span class="wiki-tag tag-blue">Макроэкономика</span>
+            </div>
+            <div class="wiki-title">Рынок недвижимости Казахстана</div>
+            <div class="wiki-lead">Казахстанский рынок недвижимости — это 12 трлн тенге с глубокой структурной деформацией. 68% сделок долевого строительства идут по серым схемам, проникновение ипотеки в ВВП — 5%. Одновременно — сформированный отложенный спрос: 47% граждан планируют покупку жилья в ближайшие 5 лет.</div>
+          </div>
+
+          <div id="kz1" class="wiki-h2">1. Макроэкономика рынка</div>
+          <table class="wiki-table">
+            <tr><th>Показатель</th><th>Значение</th></tr>
+            <tr><td>Годовой оборот рынка недвижимости РК</td><td>~12 трлн тенге</td></tr>
+            <tr><td>Обеспеченность жильём</td><td>24,5 м² на человека (норма ООН — 30 м²)</td></tr>
+            <tr><td>Ежегодный прирост населения</td><td>200–230 тыс. человек</td></tr>
+            <tr><td>Проникновение ипотеки в ВВП</td><td>5% (в десятки раз ниже развитых стран)</td></tr>
+            <tr><td>Сделки по серым схемам (долевое строительство)</td><td>До 68%</td></tr>
+            <tr><td>Рынок аренды вне правового поля</td><td>До 70%</td></tr>
+          </table>
+
+          <div id="kz2" class="wiki-h2">2. Структурные проблемы рынка</div>
+          <div class="wiki-h3">Кризис доверия и посредничества</div>
+          <p class="wiki-p">На рынке отсутствует адекватное профессиональное звено между участниками C2C и B2C сегментов. Существующий институт риэлторства воспринимается потребителями как ненадлежащий и неоправданно дорогой сервис без реальной ответственности.</p>
+
+          <div class="wiki-h3">Функциональный разрыв</div>
+          <p class="wiki-p">Современные цифровые платформы ограничены функцией поиска объектов. Процедурный цикл (оценка, юридическое сопровождение, нотариат, финансовые расчёты) полностью оторван от этапа выбора — высокие транзакционные издержки и риски для граждан.</p>
+
+          <div class="wiki-h3">«Серые» зоны сопутствующих услуг</div>
+          <p class="wiki-p">Рынок ремонта и обустройства — зона максимального риска. Отсутствие стандартов качества и повсеместное мошенничество превращают финальный этап приобретения жилья в источник конфликтов.</p>
+
+          <div class="callout amber">
+            <strong>Вывод Sana Holding:</strong> рынок недвижимости РК — крупнейший, но наименее нормализованный потребительский рынок страны. Это создаёт идеальные условия для появления единого оператора полного цикла.
+          </div>
+
+          <div id="kz3" class="wiki-h2">3. Потребительский рынок и поведение</div>
+          <div class="wiki-h3">Парадокс «сверхвысокой рациональности»</div>
+          <p class="wiki-p">Покупка жилья — крупнейший разовый расход в жизни человека. Это формирует максимальный уровень мотивации к эффективности и ставит задачу устранения информационной асимметрии между покупателем и продавцом.</p>
+
+          <div class="wiki-h3">Проблема удержания</div>
+          <p class="wiki-p">Низкая частота транзакций (покупка жилья — событие редкое) делает retention-стратегию критически важной. Без интеграции дополнительных сервисов (ремонт, ЖКУ, управление) платформа теряет клиента сразу после сделки.</p>
+
+          <div id="kz4" class="wiki-h2">4. Рынок ипотеки</div>
+          <p class="wiki-p">Проникновение ипотеки в ВВП составляет 5% — в 10–20 раз ниже, чем в развитых странах. Рынок монополизирован государственными программами (Отбасы банк). Одновременно сформирован сильный неудовлетворённый спрос — особенно среди молодёжи и семей без собственного жилья.</p>
+
+          <div id="kz-alatau" class="wiki-h2">5. Alatau City — уникальный полигон</div>
+          <p class="wiki-p">Alatau City — не просто строительная площадка, а необходимый полигон для легализации 12-триллионного оборота и конвертации его в прозрачную цифровую среду.</p>
+
+          <div class="wiki-h3">Аналог с Дубаем</div>
+          <p class="wiki-p">Сочетание законодательного мандата, налоговой автономии до 2050 года и защиты инвестиций по английскому праву ставит проект на уровень дубайских аналогов.</p>
+
+          <div class="callout">
+            <strong>24 апреля 2026:</strong> ACB совместно с Binance Kazakhstan провёл первый в Казахстане криптоплатёж в Alem.ai в присутствии Главы государства.
+            <br><strong>1 мая 2026:</strong> Нацбанк ввёл системное регулирование цифровых активов.
+          </div>
+
+          <div id="kz6" class="wiki-h2">6. Правовая база — Конституционный закон</div>
+          <p class="wiki-p">Конституционный закон «О специальном статусе города Алатау» закрепил:</p>
+          <ul class="wiki-ul">
+            <li>Принцип <strong>Digital by default</strong> (ст. 12) — цифровая транзакция как стандарт</li>
+            <li>Легализацию <strong>блокчейн-кадастра</strong> прав на недвижимость (п. 3 ст. 66)</li>
+            <li>Право банков создавать <strong>дочерние структуры-резиденты</strong> для операций с цифровыми активами (п. 3–4 ст. 50)</li>
+            <li>Налоговую автономность Alatau City <strong>до 2050 года</strong></li>
+            <li>Защиту инвестиций по нормам <strong>английского права</strong></li>
+          </ul>
+
+
+        </div>
+      </div>
+    </div>
+
+    <!-- SOCIOLOGY -->
+    <div class="panel" id="panel-sociology">
+      <div class="wiki-layout">
+        <div class="wiki-toc">
+          <div class="toc-title">Содержание</div>
+          <a class="toc-item active" onclick="scrollToSection('soc1')">1. Жилищные условия</a>
+          <a class="toc-item" onclick="scrollToSection('soc2')">2. Планы приобретения</a>
+          <a class="toc-item" onclick="scrollToSection('soc3')">3. Социальная связь</a>
+          <a class="toc-item" onclick="scrollToSection('soc4')">4. Строительный рынок</a>
+          <a class="toc-item" onclick="scrollToSection('soc5')">5. Методология</a>
+        </div>
+        <div class="wiki-body">
+          <div class="wiki-header">
+            <div class="wiki-tags">
+              <span class="wiki-tag tag-green">Социология</span>
+              <span class="wiki-tag tag-amber">Экономика</span>
+              <span class="wiki-tag tag-gray">Adam Research</span>
+            </div>
+            <div class="wiki-title">Социологические и экономические исследования</div>
+            <div class="wiki-lead">Результаты комплексного исследования Sana Holding: опрос 8000 казахстанцев о жилищных условиях и планах приобретения жилья, анализ строительного рынка РК.</div>
+          </div>
+
+          <div id="soc1" class="wiki-h2">1. Жилищные условия населения</div>
+          <p class="wiki-p">Телефонный опрос: 8000 респондентов, все регионы, репрезентативная выборка по полу, возрасту, месту проживания и национальности. Даты: 22 июня — 2 августа 2023 г.</p>
+
+          <table class="wiki-table">
+            <tr><th>Оценка условий</th><th>Доля</th><th>Примечание</th></tr>
+            <tr><td>«Хорошие»</td><td>37%</td><td>Выше у молодёжи и образованных</td></tr>
+            <tr><td>«Нормальные»</td><td>52%</td><td>Основная масса населения</td></tr>
+            <tr><td>«Плохие»</td><td>11%</td><td>Коррелирует с низким доходом</td></tr>
+          </table>
+
+          <div class="wiki-h3">Дифференциация по доходу</div>
+          <table class="wiki-table">
+            <tr><th>Группа</th><th>«Хорошие»</th><th>«Плохие»</th></tr>
+            <tr><td>Богатые</td><td>64%</td><td>1%</td></tr>
+            <tr><td>Бедные</td><td>20%</td><td>21%</td></tr>
+          </table>
+
+          <div id="soc2" class="wiki-h2">2. Планы по приобретению жилья</div>
+          <div class="callout">
+            <strong>47% казахстанцев</strong> планируют приобрести жильё в течение 5 лет: 19% — в ближайшие 1–2 года, 28% — через 3–5 лет.
+          </div>
+
+          <table class="wiki-table">
+            <tr><th>Группа</th><th>Планируют покупку (5 лет)</th></tr>
+            <tr><td>Все казахстанцы</td><td>47%</td></tr>
+            <tr><td>Молодёжь до 29 лет без жилья</td><td>70%</td></tr>
+            <tr><td>Богатые</td><td>57%</td></tr>
+            <tr><td>Бедные</td><td>39%</td></tr>
+            <tr><td>Группа старше 45 лет</td><td>30%</td></tr>
+          </table>
+
+          <div class="wiki-h3">Основные мотивы покупки</div>
+          <ul class="wiki-ul">
+            <li>Отсутствие собственного жилья — главный детерминант: 6 из 10 без жилья планируют покупку</li>
+            <li>Улучшение жилищных условий как мотив смены региона: 40–50% граждан без собственности</li>
+            <li>Жильё как основной инструмент сбережений и инвестиций</li>
+          </ul>
+
+          <div id="soc3" class="wiki-h2">3. Связь жилья и социальной стабильности</div>
+          <p class="wiki-p">Данные подтверждают прямую связь между качеством жилья и социальной стабильностью:</p>
+          <div class="callout amber">
+            Среди граждан с плохими жилищными условиями критиков деятельности государственных институтов в <strong>3,1 раза больше</strong>, чем в группе удовлетворённых. Рынок недвижимости напрямую формирует электоральный климат.
+          </div>
+
+          <div id="soc4" class="wiki-h2">4. Строительный рынок РК</div>
+          <p class="wiki-p">Исследование «Строительный рынок Казахстана» (март 2025) охватывает структуру сектора, динамику ввода жилья, производительность труда и ConTech-возможности.</p>
+
+          <table class="wiki-table">
+            <tr><th>Показатель</th><th>Данные</th></tr>
+            <tr><td>Рост строительного рынка РК</td><td>Устойчивый рост, опережающий ВВП</td></tr>
+            <tr><td>Доля в ВВП</td><td>6–8%</td></tr>
+            <tr><td>Дефицит жилья</td><td>24,5 м² на чел. при норме 30 м²</td></tr>
+            <tr><td>Ежегодный прирост населения</td><td>200–230 тыс. человек</td></tr>
+            <tr><td>Потенциал ConTech</td><td>Значительный — производительность отстаёт от мировых стандартов</td></tr>
+          </table>
+
+          <div id="soc5" class="wiki-h2">5. Методология исследования</div>
+          <p class="wiki-p">Sana Holding провёл <strong>мультидисциплинарное исследование</strong>, включавшее:</p>
+          <ul class="wiki-ul">
+            <li>Анализ международного опыта (США, Сингапур, Россия, ОАЭ)</li>
+            <li>Анализ макроэкономических параметров рынка РК</li>
+            <li>In-house социологические замеры (Adam Research): 8000 респондентов</li>
+            <li>Аудит технологических и организационных барьеров</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ECOSYSTEM -->
+    <div class="panel" id="panel-ecosystem">
+      <div class="wiki-layout">
+        <div class="wiki-toc">
+          <div class="toc-title">Содержание</div>
+          <a class="toc-item active" onclick="scrollToSection('eco1')">1. Клиентский путь</a>
+          <a class="toc-item" onclick="scrollToSection('eco-services')">2. Ключевые сервисы</a>
+          <a class="toc-item" onclick="scrollToSection('eco3')">3. Инфраструктурные слои</a>
+          <a class="toc-item" onclick="scrollToSection('eco4')">4. Unified ID</a>
+          <a class="toc-item" onclick="scrollToSection('eco5')">5. Токенизация</a>
+          <a class="toc-item" onclick="scrollToSection('eco6')">6. Платформа</a>
+          <a class="toc-item" onclick="scrollToSection('eco7')">7. Минимальный контур</a>
+          <a class="toc-item" onclick="scrollToSection('eco8')">8. Финансовая архитектура</a>
+        </div>
+        <div class="wiki-body">
+          <div class="wiki-header">
+            <div class="wiki-tags">
+              <span class="wiki-tag tag-green">Архитектура</span>
+              <span class="wiki-tag tag-amber">Стратегия</span>
+              <span class="wiki-tag tag-blue">ACB PropTech</span>
+            </div>
+            <div class="wiki-title">Архитектура PropTech-экосистемы</div>
+            <div class="wiki-lead">Целевая архитектура складывается из пяти этапов клиентского пути поверх двух сквозных инфраструктурных слоёв. В периметре одного акционера закрывается 6 из 8 функциональных блоков — уникальное конкурентное преимущество.</div>
+          </div>
+
+          <div id="eco1" class="wiki-h2">1. Клиентский путь — 5 этапов</div>
+          <table class="wiki-table">
+            <tr><th>Этап</th><th>Описание</th><th>Мировой стандарт</th><th>Актив в периметре</th></tr>
+            <tr><td>🔍 Поиск</td><td>Точка входа. Объект, биография, оценка, scores окружения</td><td>Zillow (204 млн MAU), Beike</td><td>Krisha.kz</td></tr>
+            <tr><td>📋 Сделка</td><td>Цифровая регистрация, эскроу, юридическое сопровождение</td><td>Домклик (8 млн сделок/год), DLD</td><td>Alatau City Bank</td></tr>
+            <tr><td>💰 Финансы</td><td>Ипотека, проектное финансирование, AI-скоринг</td><td>DBS Bank, Домклик</td><td>ACB + ипотека</td></tr>
+            <tr><td>📈 Инвестиции</td><td>Токенизация, долевое владение, входной порог от $100</td><td>Prypco Mint (Дубай, вход от $545)</td><td>Apartchain (песочница НБ РК)</td></tr>
+            <tr><td>🏠 Сервис</td><td>ЖКУ-биллинг, ремонт, страхование, управление зданием</td><td>Beike Home Renovation, Kraken Tech</td><td>Алсеко, ЕРЦ, Kaspi, Alatau City Garant</td></tr>
+          </table>
+
+          <div class="callout amber">
+            <strong>Критическая зависимость:</strong> если хотя бы один этап выпадает или работает плохо — рвётся вся цепочка. Пользователь возвращается в офлайн, теряется доверие, исчезает экосистемный эффект.
+          </div>
+
+          <div id="eco-services" class="wiki-h2">2. Ключевые сервисы и активы экосистемы</div>
+
+          <div class="wiki-h3">Krisha.kz — поиск и листинг</div>
+          <p class="wiki-p">Крупнейший трафик жилья в РК. Необходима трансформация из доски объявлений в <strong>transaction-ready платформу</strong>:</p>
+          <ul class="wiki-ul">
+            <li>Биография объекта + публичная метрика точности оценки (по образцу Zillow)</li>
+            <li>Расширенная OSINT-карточка и рейтинги ТОП-100 застройщиков (по образцу Домклик)</li>
+            <li>Подключение к Unified ID и точки входа в ипотеку, страхование, токенизацию</li>
+            <li>Категория «Инвестиционные объекты» для токенизированных лотов</li>
+          </ul>
+
+          <div class="wiki-h3">Alatau City Bank — сделка и финансы</div>
+          <p class="wiki-p">Капитал свыше 1 трлн тенге, k2=28%, эскроу, ипотека, проектное финансирование. Приоритетные задачи:</p>
+          <ul class="wiki-ul">
+            <li>Запуск <strong>Unified ID</strong> для всей экосистемы — задача №1</li>
+            <li>Цифровая ипотека за 30 минут</li>
+            <li>Эскроу для частных лиц по фиксированным тарифам</li>
+            <li>Эскроу 2.0 с динамической разблокировкой по BIM-данным стройки</li>
+            <li>CryptoPay — расширение на все сценарии экосистемы</li>
+          </ul>
+
+          <div class="wiki-h3">Alatau City Garant — страхование</div>
+          <p class="wiki-p">Готовая лицензия, ТОП-8 рынка, 447 тыс. клиентов. Три новых продукта:</p>
+          <ul class="wiki-ul">
+            <li>Титульное страхование (по модели First American)</li>
+            <li>Гарантия страховой суммы при утрате права собственности (по модели Сберстраха)</li>
+            <li>Страхование арендных рисков (по модели QuintoAndar)</li>
+          </ul>
+
+          <div class="wiki-h3">Алсеко и ЕРЦ — биллинг и данные</div>
+          <p class="wiki-p">Биллинговые операторы ЖКУ и поведенческие данные. Зона высокого риска — текущий «batch-процессинг» несовместим с цифровой средой. Без перехода к Real-time API невозможны скоринг, верификация и бесшовная смена владельца.</p>
+
+          <div class="wiki-h3">Kaspi — lifestyle и обустройство</div>
+          <p class="wiki-p">14 млн пользователей, рассрочка, логистика. Триггер «новая покупка недвижимости» → пакет «Ремонт и обустройство», маркетплейс верифицированных бригад с эскроу-оплатой через ACB.</p>
+
+          <div id="eco3" class="wiki-h2">3. Сквозные инфраструктурные слои</div>
+          <table class="wiki-table">
+            <tr><th>Слой</th><th>Компоненты</th><th>Значение</th></tr>
+            <tr><td><strong>Единые данные и идентификация</strong></td><td>Unified ID, Property Hub, Transaction Engine, Analytics</td><td>Без этого каждый сервис — изолированная точка, не платформа</td></tr>
+            <tr><td><strong>ConTech-стандарты</strong></td><td>BIM, цифровой кадастр, блокчейн-контроль стройки</td><td>Фундамент для эскроу 2.0 и токенизации на этапе строительства</td></tr>
+          </table>
+
+          <div id="eco4" class="wiki-h2">4. Unified ID — задача №1</div>
+          <p class="wiki-p">Единый identity-провайдер с KYC-верификацией. Один раз прошёл проверку — доступ во все сервисы без повторного KYC.</p>
+          <div class="callout">
+            <strong>Без Unified ID</strong> каждый сервис работает изолированно, а экосистемного эффекта нет. Это задача №1, на которой стоит всё остальное.
+          </div>
+
+          <div id="eco5" class="wiki-h2">5. Токенизация недвижимости</div>
+          <p class="wiki-p">Флагманский новый продукт по модели <strong>Prypco Mint</strong> (Дубай):</p>
+          <ul class="wiki-ul">
+            <li>Apartchain работает в регуляторной песочнице НБ РК (с февраля 2026). Возможно развитие через партнёрство с ACB либо самостоятельно как отдельный вектор</li>
+            <li>Юридическая модель ARVAs (цифровые активы на недвижимость)</li>
+            <li>Технико-юридический мост блокчейн-токена с государственным кадастром</li>
+            <li>Страхование цифровых долей через Alatau City Garant</li>
+          </ul>
+          <p class="wiki-p">Пилотная площадка — <strong>Iconic Towers</strong>: регуляторное доказательство и понятный объект для международных инвесторов.</p>
+
+          <div id="eco6" class="wiki-h2">6. Интерфейс экосистемы — автономная платформа</div>
+          <p class="wiki-p">Из трёх сценариев (автономная платформа / Krisha как драйвер / банковское ядро ACB) обоснован <strong>автономный сервис</strong> — отдельный бренд и приложение по модели Домклик и Dubai REST.</p>
+
+          <div class="wiki-h3">Что видит пользователь</div>
+          <ul class="wiki-ul">
+            <li>Портфель объектов: своё жильё, аренда, токенизированные доли с текущей стоимостью</li>
+            <li>Единая история всех сделок и платежей</li>
+            <li>Сквозная авторизация во все сервисы без повторного KYC</li>
+            <li>Единые уведомления: ипотека, страховки, дивиденды по долям, ЖКУ, стройка</li>
+            <li>Аналитика по доходности и расходам</li>
+          </ul>
+
+          <div id="eco7" class="wiki-h2">7. Минимально достаточный контур запуска</div>
+          <table class="wiki-table">
+            <tr><th>Приоритет</th><th>Задача</th><th>Почему критично</th></tr>
+            <tr><td>1</td><td>Unified ID на стороне ACB</td><td>Без него — изолированные точки, не экосистема</td></tr>
+            <tr><td>2</td><td>API-шлюз поверх биллингов Алсеко/ЕРЦ</td><td>Без него — треть экосистемной ценности недоступна</td></tr>
+            <tr><td>3</td><td>MVP Common Data Layer</td><td>Property Hub + Transaction Engine = бесшовная сделка</td></tr>
+            <tr><td>4</td><td>Дочерняя структура ACB + пилот токенизации на Iconic Towers</td><td>Регуляторное доказательство + нарратив для инвесторов</td></tr>
+            <tr><td>5</td><td>Подзаконные акты Администрации Alatau City</td><td>Без них платформа технически не запускается</td></tr>
+          </table>
+
+          <div id="eco8" class="wiki-h2">8. Сквозная финансовая архитектура</div>
+          <p class="wiki-p">За ACB закреплена роль финансового оператора территории: полный цикл финансового сопровождения — от первичного отбора и проверки до контроля целевого расходования и взаимодействия с инвесторами.</p>
+          <p class="wiki-p">СФА должна работать независимо от конкретных типов объектов и этапа развития города, с возможностью расширения по мере формирования цифрового слоя Alatau City.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- BENCHMARKS PANEL -->
+    <div class="panel" id="panel-benchmarks">
+      <div class="bench-panel">
+        <div class="section-title">📊 Мировые бенчмарки и лучшие практики</div>
+        <div class="section-sub">Детальный разбор ключевых PropTech-игроков с оценкой релевантности для ACB PropTech</div>
+
+        <div class="docs-filters">
+          <button class="filter-chip on" onclick="filterBench('all',this)">Все</button>
+          <button class="filter-chip" onclick="filterBench('bank',this)">Банки и финтех</button>
+          <button class="filter-chip" onclick="filterBench('portal',this)">Порталы</button>
+          <button class="filter-chip" onclick="filterBench('gov',this)">Государственные</button>
+          <button class="filter-chip" onclick="filterBench('high',this)">★★★★★ Релевантность</button>
+        </div>
+
+        <div class="bench-grid" id="bench-grid"></div>
+      </div>
+    </div>
+
+    <!-- DOCS PANEL -->
+    <div class="panel" id="panel-docs">
+      <div class="docs-panel">
+        <div class="section-title">📁 Документы и презентации</div>
+        <div class="section-sub">25 файлов — white papers, стратегии, исследования, презентации. Нажми «Открыть» для просмотра в браузере.</div>
+
+        <div class="docs-filters">
+          <button class="filter-chip on" onclick="filterDocs('all',this)">Все</button>
+          <button class="filter-chip" onclick="filterDocs('strategy',this)">Стратегия</button>
+          <button class="filter-chip" onclick="filterDocs('research',this)">Исследования</button>
+          <button class="filter-chip" onclick="filterDocs('presentation',this)">Презентации</button>
+          <button class="filter-chip" onclick="filterDocs('sociology',this)">Социология</button>
+          <button class="filter-chip" onclick="filterDocs('acb',this)">ACB</button>
+        </div>
+
+        <div class="docs-grid" id="docs-grid"></div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+</div><!-- /app -->
+
+<!-- AI OVERLAY -->
+<div class="ai-overlay" id="aiOverlay" onclick="closeAIonBg(event)">
+  <div class="ai-window">
+    <div class="ai-header">
+      <div class="ai-header-left">
+        <div class="ai-avatar">AI</div>
+        <div>
+          <div class="ai-name">PropTech AI-ассистент</div>
+          <div class="ai-status">На основе материалов базы знаний</div>
+        </div>
+      </div>
+      <button class="ai-close" onclick="closeAI()">×</button>
+    </div>
+
+    <div class="ai-messages" id="aiMessages">
+      <div class="ai-welcome">
+        <div class="aw-icon">🏗️</div>
+        <p>Задай любой вопрос по PropTech, Alatau City, мировым бенчмаркам или казахстанскому рынку — отвечаю на основе документов базы знаний.</p>
+      </div>
+    </div>
+
+    <div class="ai-suggestions" id="aiSuggestions">
+      <button class="ai-sug" onclick="askAI('Что такое PropTech-экосистема Alatau City и почему это уникально?')">Что такое Alatau City PropTech?</button>
+      <button class="ai-sug" onclick="askAI('Объясни клиентский путь в экосистеме — 5 этапов')">5 этапов клиентского пути</button>
+      <button class="ai-sug" onclick="askAI('Какой объём мирового рынка PropTech и какие тренды на 2025-2026?')">Рынок PropTech 2025–2026</button>
+      <button class="ai-sug" onclick="askAI('Что показало социологическое исследование Adam Research о жилье в Казахстане?')">Социология: жильё в КЗ</button>
+      <button class="ai-sug" onclick="askAI('Что такое Unified ID и почему это задача №1 для ACB?')">Unified ID — задача №1</button>
+      <button class="ai-sug" onclick="askAI('Как работает токенизация недвижимости и что такое Apartchain?')">Токенизация недвижимости</button>
+    </div>
+
+    <div class="ai-input-area">
+      <textarea id="aiInput" rows="1" placeholder="Задай вопрос по базе знаний..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendAI()}" oninput="autoResize(this)"></textarea>
+      <button class="ai-send" id="aiSendBtn" onclick="sendAI()">➤</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── AI KNOWLEDGE BASE ──
+const AI_KNOWLEDGE = `
+Ты — AI-ассистент PropTech Knowledge Base, созданной компанией Sana Holding для Alatau City Bank (ACB).
+
+КЛЮЧЕВЫЕ ФАКТЫ ИЗ ДОКУМЕНТОВ:
+
+МИРОВОЙ РЫНОК:
+- Мировой рынок недвижимости: ~$393,3 трлн (Savills, 2023)
+- Доля PropTech в оцифровке: менее 3% (McKinsey)
+- Рынок PropTech 2025: $47,08 млрд, прогноз 2034: $185,31 млрд (CAGR 16,4%)
+- Рынок ConTech к 2030: $2,3 трлн
+- Пик инвестиций: >$50 млрд (2021), восстановление +32,5% (2024)
+- PropTech растёт быстрее финтека (15%) и e-commerce (8%)
+
+ПРОПTECH 4.0: переход от точечных инструментов к интеллектуальным экосистемам с AI, блокчейном, IoT и FinProp.
+
+БЕНЧМАРКИ:
+- DBS Bank (Сингапур): лучший PropTech-банк АТР 2025, B2C + B2B экосистема, GenAI-скоринг
+- Домклик/Сбер: 8 млн сделок/год, регистрация 1-3 дня (было 10-14), 30% без ипотеки
+- Zillow: 204 млн MAU, маржа >75%, рост ипотеки +53% (2025)
+- Dubai Land Department: 158 000 сделок за 9 мес. 2025 на $136 млрд (+32%), токенизация от $136
+- REA Group: EBITDA >60%, монетизация данных о поведении пользователей
+- Prypco Mint (Дубай): токенизация от $545, блокчейн привязан к реестру DLD
+
+КАЗАХСТАН:
+- Годовой оборот рынка: 12 трлн тенге
+- 68% сделок долевого строительства — по серым схемам
+- 70% рынка аренды — вне правового поля
+- Обеспеченность жильём: 24,5 м² (норма ООН — 30 м²)
+- Проникновение ипотеки в ВВП: 5% (в десятки раз ниже развитых стран)
+
+СОЦИОЛОГИЯ (Adam Research, опрос 8000 чел., 2023):
+- 37% оценивают жилищные условия как «хорошие», 52% — «нормальные», 11% — «плохие»
+- 47% планируют купить жильё в течение 5 лет
+- 70% молодёжи до 29 лет без жилья планируют покупку за 5 лет
+- В 3,1 раза больше критиков госинститутов среди людей с плохим жильём
+
+ALATAU CITY:
+- Конституционный закон: Digital by default (ст.12), блокчейн-кадастр (п.3 ст.66), дочерние структуры для цифровых активов (п.3-4 ст.50)
+- 24 апреля 2026: первый в Казахстане криптоплатёж (ACB + Binance Kazakhstan)
+- 1 мая 2026: НБ РК ввёл системное регулирование цифровых активов
+- Налоговая автономность до 2050 года, защита инвестиций по английскому праву
+
+ЭКОСИСТЕМА ACB PROPTECH:
+5 этапов клиентского пути: Поиск (Krisha.kz) → Сделка (ACB) → Финансы (ACB ипотека) → Инвестиции (Apartchain/токенизация) → Сервис (Алсеко, ЕРЦ, Kaspi, Alatau City Garant)
+
+8 функциональных блоков: листинг, сделка, финансы, страхование, сервис, инвестиции, платежи/крипто, ConTech
+
+Активы в периметре: Krisha.kz (трафик), ACB (капитал >1 трлн ₸, k2=28%, эскроу, ипотека), Alatau City Garant (страхование, ТОП-8, 447 тыс.клиентов), Алсеко и ЕРЦ (биллинг ЖКУ, данные), Kaspi (14 млн пользователей, рассрочка)
+
+2 инфраструктурных слоя: 1) Unified ID + KYC + Property Hub + Transaction Engine 2) ConTech (BIM, цифровой кадастр)
+
+UNIFIED ID — ЗАДАЧА №1: без единой идентификации каждый сервис работает изолированно, экосистемного эффекта нет.
+
+ТОКЕНИЗАЦИЯ (Apartchain):
+- По модели Prypco Mint (Дубай)
+- Apartchain работает в регуляторной песочнице НБ РК (с февраля 2026). Возможно развитие через партнёрство с ACB либо самостоятельно как отдельный вектор
+- Юридическая модель ARVAs
+- Пилотная площадка: Iconic Towers
+- Блокчейн-токен + государственный кадастр
+
+МИНИМАЛЬНЫЙ КОНТУР ЗАПУСКА (5 приоритетов):
+1. Unified ID на стороне ACB
+2. API-шлюз Алсеко/ЕРЦ
+3. MVP Common Data Layer (Property Hub + Transaction Engine)
+4. Дочерняя структура ACB + пилот Iconic Towers
+5. Подзаконные акты Администрации Alatau City
+
+ЦЕЛЬ: захват 8% адресуемого рынка к 2031 году = 210-280 млрд тенге выручки.
+
+РОЛЬ SANA HOLDING: фасилитация — социологическое сопровождение (Adam Research), нормативное строительство, GR, нейтральная операционная модель, медиа-стратегия, упаковка инвестиционного нарратива.
+
+ОТВЕЧАЙ: на русском языке, конкретно с цифрами, ссылаясь на источники из документов. Для структурных ответов используй **жирный** для ключевых цифр. Длина ответа соразмерна вопросу.`;
+
+// ── STATE ──
+let apiKey = sessionStorage.getItem('proptech_ai_key') || '';
+let chatHistory = [];
+let isAILoading = false;
+
+// ── INIT ──
+document.addEventListener('DOMContentLoaded', () => {
+  renderBenchmarks('all');
+  renderDocs('all');
+});
+
+// ── NAVIGATION ──
+function showPanel(id, el) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  if (el) {
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    el.classList.add('active');
+  }
+  const titles = {
+    home: 'Обзор базы знаний', world: 'Мировой рынок PropTech',
+    kazakhstan: 'Рынок Казахстана', sociology: 'Социология и экономика',
+    ecosystem: 'Архитектура экосистемы', benchmarks: 'Мировые бенчмарки',
+    docs: 'Документы и презентации'
+  };
+  document.getElementById('breadcrumb').innerHTML = id === 'home'
+    ? '<strong>PropTech Knowledge Base</strong>'
+    : `<a onclick="showPanel('home',null)">PropTech KB</a> <span>›</span> <strong>${titles[id] || id}</strong>`;
+}
+
+function scrollToSection(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ── BENCHMARKS ──
+const BENCHMARKS = [
+  { name:'DBS Bank', flag:'🇸🇬', country:'Сингапур', type:'bank', rel:5, relLabel:'★★★★★',
+    model:'B2C + B2B PropTech-банк',
+    rows:[['Позиция','Лучший PropTech-банк АТР 2025'],['Модель','Маркетплейс + ESG-кредиты + GenAI-скоринг'],['Ключевой эффект','Двусторонняя платформа = самоускоряющийся сетевой эффект']],
+    note:'Образец банка как оператора PropTech-экосистемы. Именно эту роль должен занять ACB.' },
+  { name:'Домклик / Сбербанк', flag:'🇷🇺', country:'Россия', type:'bank', rel:5, relLabel:'★★★★★',
+    model:'Банк как PropTech-оператор полного цикла',
+    rows:[['Сделок в год','8 млн'],['Регистрация','1–3 дня (было 10–14)'],['Без ипотеки','30% сделок']],
+    note:'Ближайшая применимая модель для ACB. Единое окно от поиска до регистрации.' },
+  { name:'Dubai Land Department', flag:'🇦🇪', country:'ОАЭ', type:'gov', rel:5, relLabel:'★★★★★',
+    model:'Государственная PropTech-экосистема',
+    rows:[['Сделок за 9 мес. 2025','158 000 на $136 млрд (+32% г/г)'],['Токенизация','От $545 через Prypco Mint'],['Эскроу','Обязательно для off-plan']],
+    note:'Прямой аналог для Alatau City. Модель государственной PropTech-экосистемы.' },
+  { name:'Prypco Mint', flag:'🇦🇪', country:'ОАЭ', type:'gov', rel:5, relLabel:'★★★★★',
+    model:'Токенизация недвижимости для розничных инвесторов',
+    rows:[['Входной порог','От $545'],['Технология','Блокчейн + реестр DLD'],['Доход','Автоматическое распределение']],
+    note:'Токены на блокчейне с прямой связкой с государственным реестром DLD.' },
+  { name:'Krisha.kz', flag:'🇰🇿', country:'Казахстан', type:'portal', rel:5, relLabel:'★★★★★',
+    model:'Портал недвижимости → transaction-ready платформа',
+    rows:[['Аудитория','5,9 млн активных пользователей/мес'],['Владелец','Kolesa Group (Ломтадзе 48%, Kaspi Shop 40%)'],['Потенциал','Интеграция ипотечного модуля ACB']],
+    note:'Крупнейший портал недвижимости РК. Потенциал трансформации в transaction-ready платформу.' },
+  { name:'Zillow', flag:'🇺🇸', country:'США', type:'portal', rel:4, relLabel:'★★★★☆',
+    model:'Housing Super App: поиск + ипотека + аренда',
+    rows:[['MAU','204 млн ежемесячных пользователей'],['Маржа','>75%'],['AI-поиск','Natural language search']],
+    note:'Мировой стандарт portal-модели и AVM. Рост ипотечных выдач +53% (2025).' },
+  { name:'Beike / Lianjia', flag:'🇨🇳', country:'Китай', type:'portal', rel:4, relLabel:'★★★★☆',
+    model:'Экосистема: сделки + агенты + ремонт + аренда',
+    rows:[['База объектов','315 млн верифицированных записей'],['Доля рынка','28% вторичных сделок КНР'],['Agent Copilot','450K агентов, точность 92%']],
+    note:'Стратегический образец для ACB PropTech. Экосистемная модель, а не просто портал.' },
+  { name:'REA Group', flag:'🇦🇺', country:'Австралия', type:'portal', rel:4, relLabel:'★★★★☆',
+    model:'Portal → финансовый инструмент',
+    rows:[['EBITDA','>60%'],['Выручка','A$1,5 млрд (2025)'],['Вертикаль','Mortgage Choice — ипотека внутри']],
+    note:'Эталон эволюции portal → финтех. Именно этот путь проходит ACB PropTech.' },
+  { name:'Qualia', flag:'🇺🇸', country:'США', type:'bank', rel:4, relLabel:'★★★★☆',
+    model:'Транзакционная платформа (title + escrow)',
+    rows:[['Что делает','Объединяет всех участников сделки в одном окне'],['Аналог в КЗ','Нотариус + ЦОН + банк (сейчас раздельно)'],['Роль','Образец транзакционного слоя ACB']],
+    note:'Именно такой продукт нужно построить в Казахстане — eClosing платформа.' },
+  { name:'Apartchain', flag:'🇰🇿', country:'Казахстан', type:'gov', rel:5, relLabel:'⭐ Наш проект',
+    model:'Токенизация недвижимости — RWA',
+    rows:[['Статус','Sandbox НБ РК (с февраля 2026)'],['Развитие','Партнёрство с ACB или самостоятельный вектор'],['Ключевой барьер','Юридическая привязка токена к ГЦН']],
+    note:'Первая платформа токенизации недвижимости в Казахстане. Медиа: Inbusiness.kz май 2026.' },
+];
+
+const DOCUMENTS = [
+  { name:'Справка о PropTech-трансформации и Alatau City', type:'docx', cat:'research', catLabel:'Исследование', file:'https://drive.google.com/file/d/1iMCGoq2z9IO-Q5Ih_YLtNG5yNUs4Bu0E/view?usp=sharing', desc:'Мировой контекст, казахстанская специфика, социологические данные, стратегические выводы' },
+  { name:'Стратегия PropTech-трансформации (White Paper)', type:'docx', cat:'strategy', catLabel:'White Paper', file:'https://drive.google.com/file/d/16r4y6UN9MXiUMuUgE8U0Gf2UVIChEbTl/view?usp=sharing', desc:'Официальная стратегия ACB: глобальный рынок, макроэкономика РК, концепция экосистемы, дорожная карта' },
+  { name:'Операционный контур PropTech-экосистемы (краткий)', type:'docx', cat:'strategy', catLabel:'Стратегия', file:'https://drive.google.com/file/d/12wusyke3wtHl30Tk2-TMktjv_MJPWPVS/view?usp=sharing', desc:'Краткий обзор архитектуры, пяти этапов клиентского пути и минимального контура запуска' },
+  { name:'Операционный контур PropTech-экосистемы (полный)', type:'docx', cat:'strategy', catLabel:'Стратегия', file:'https://drive.google.com/file/d/1UV_g6UCWQO0cLi3GfAiXlED1lVMCqGDt/view?usp=sharing', desc:'Детальный разбор всех вертикалей: Krisha, ACB, Alatau City Garant, Алсеко/ЕРЦ, Kaspi, токенизация' },
+  { name:'ACB PropTech Strategy — финальная презентация', type:'pptx', cat:'presentation', catLabel:'Презентация', file:'https://drive.google.com/file/d/11orSxSez9bdM8F-n90gSG4LJmi3jI13B/view?usp=sharing', desc:'Финальная презентация стратегии PropTech для акционеров ACB' },
+  { name:'PropTech Ecosystem Alatau City', type:'pptx', cat:'presentation', catLabel:'Презентация', file:'https://drive.google.com/file/d/1zIAFoYAhhsx4wiCXm4ATRbCJ0aKJ0iAW/view?usp=sharing', desc:'Обзор экосистемы Alatau City для внешних аудиторий' },
+  { name:'Презентация Алатау Сити Банк (05)', type:'pdf', cat:'presentation', catLabel:'Презентация', file:'https://drive.google.com/file/d/1smp1vJYj6cjj4hJrnf2c7KMVM6bfTcBk/view?usp=sharing', desc:'Официальная презентация Alatau City Bank' },
+  { name:'Презентация Алатау Сити+ (06)', type:'pdf', cat:'presentation', catLabel:'Презентация', file:'https://drive.google.com/file/d/1suLaFgNVJKiv5ztT7drsZp7eaABZmgMl/view?usp=sharing', desc:'Расширенная презентация с дополнительными материалами' },
+  { name:'Презентация ГГ (14.04) — 15 слайдов', type:'pdf', cat:'presentation', catLabel:'Презентация', file:'https://drive.google.com/file/d/1s0Oy--t6S0UTp4Z2qJ_CMu3_oBSs-QHO/view?usp=sharing', desc:'Презентация для высшего руководства' },
+  { name:'Sana Holding презентация', type:'pdf', cat:'presentation', catLabel:'Презентация', file:'https://drive.google.com/file/d/11dc60NEVnPoFAW-hdEWIkxrnA0TttEyd/view?usp=sharing', desc:'Презентация Sana Holding — роль в PropTech-трансформации' },
+  { name:'Справка PropTech ACB', type:'docx', cat:'acb', catLabel:'ACB', file:'https://drive.google.com/file/d/1Lyg5IDCvr5ERvprkniKo40hE6Y8Vcrd9/view?usp=sharing', desc:'Справочный документ по PropTech-стратегии Alatau City Bank' },
+  { name:'Сопроводительное письмо PropTech', type:'docx', cat:'acb', catLabel:'ACB', file:'https://drive.google.com/file/d/1sLPVw8ZV_wq_Jx7R4VEp61eHQmoxPQNA/view?usp=sharing', desc:'Обоснование вовлечения Sana Holding и план первого этапа работ' },
+  { name:'Сквозная финансовая архитектура Alatau City', type:'docx', cat:'acb', catLabel:'ACB', file:'https://drive.google.com/file/d/1hvR8ldwjCoglmOhn4Cq-qJvKkRyRpatC/view?usp=sharing', desc:'Концепция СФА как универсальной надпроектной модели для ACB' },
+  { name:'ACB и песочница Alatau City', type:'pdf', cat:'acb', catLabel:'ACB', file:'https://drive.google.com/file/d/1VteWiJsZesEj_xOR8gqDrLRGLtoQzY1k/view?usp=sharing', desc:'Регуляторная песочница и роль ACB в цифровой трансформации' },
+  { name:'Один банк — два режима', type:'pdf', cat:'acb', catLabel:'ACB', file:'https://drive.google.com/file/d/1V75f0Z1gt-3ws4OChS5EG3trtD8M-UWs/view?usp=sharing', desc:'Концепция двойного режима работы ACB: традиционный и цифровой' },
+  { name:'Jusan и новая модель банка', type:'pdf', cat:'acb', catLabel:'ACB', file:'https://drive.google.com/file/d/1Tsir-otyFo7lomp9i4KOnypId33y7Alw/view?usp=sharing', desc:'Анализ трансформации Jusan Bank как конкурентный бенчмарк' },
+  { name:'Эскроу-счета (150125)', type:'pptx', cat:'acb', catLabel:'ACB', file:'https://drive.google.com/file/d/1gp08fxC3YN5YahuC1k_t9Z5pFePp0u22/view?usp=sharing', desc:'Детальный разбор механики эскроу для PropTech-платформы' },
+  { name:'PropTech декабрь 2024', type:'pdf', cat:'acb', catLabel:'ACB', file:'https://drive.google.com/file/d/1Y3-BY0pG1m6zLofXi88ReGKmVk3GFuL1/view?usp=sharing', desc:'Обзор PropTech-инициатив ACB за декабрь 2024 года' },
+  { name:'KB PropTech', type:'pdf', cat:'research', catLabel:'Исследование', file:'https://drive.google.com/file/d/1SepVd5aVWgdPaCFQxQnq7CeEq11uRm9p/view?usp=sharing', desc:'Исследование возможностей PropTech для Казахстана' },
+  { name:'Proptech.pdf — обзор рынка', type:'pdf', cat:'research', catLabel:'Исследование', file:'https://drive.google.com/file/d/1T_Rme8cJ8J0Ay4fEdSvb9xKGvuyzig-i/view?usp=sharing', desc:'Глобальный обзор рынка PropTech с аналитикой' },
+  { name:'Proptech-экосистемы.pdf', type:'pdf', cat:'research', catLabel:'Исследование', file:'https://drive.google.com/file/d/1cfpiu-j9LUUcNFhv8zlVm2jo2ThuIM-T/view?usp=sharing', desc:'Обзор ключевых PropTech-экосистем мира' },
+  { name:'Социология: жилищные условия РК', type:'docx', cat:'sociology', catLabel:'Социология', file:'https://drive.google.com/file/d/14s9KoIXANbZNlH72Ipwd5nahWLYq7IJ0/view?usp=sharing', desc:'Опрос 8000 чел.: оценка жилищных условий, связь с доходом и социальной стабильностью' },
+  { name:'Социология: планы приобретения жилья', type:'docx', cat:'sociology', catLabel:'Социология', file:'https://drive.google.com/file/d/1STHdTKl5JheJqbXXJbRwtd6bv39FKK-F/view?usp=sharing', desc:'Опрос 8000 чел.: планы покупки, мотивы, предпочтения по типам жилья' },
+  { name:'Жильё в Казахстане — общий отчёт', type:'pptx', cat:'sociology', catLabel:'Социология', file:'https://drive.google.com/file/d/1lbbZ6UwhVb-6ueWH9cgp-Hxy64vJxg5R/view?usp=sharing', desc:'Сводная презентация по результатам социологического исследования жилья' },
+  { name:'Строительный рынок РК (март 2025)', type:'pptx', cat:'research', catLabel:'Экономика', file:'https://drive.google.com/file/d/1OTcx7zgxQZFKCtDfmk2cmuK-RZ4zG3zR/view?usp=sharing', desc:'Анализ строительного рынка: динамика, структура, ConTech-потенциал' },
+];
+
+function renderBenchmarks(filter) {
+  const grid = document.getElementById('bench-grid');
+  const filtered = filter === 'all' ? BENCHMARKS
+    : filter === 'high' ? BENCHMARKS.filter(b => b.rel === 5)
+    : BENCHMARKS.filter(b => b.type === filter);
+  grid.innerHTML = filtered.map(b => `
+    <div class="bench-card" onclick="askAI('Расскажи подробно о ${b.name} как PropTech-бенчмарке: модель, метрики, уроки для ACB')">
+      <div class="bench-head">
+        <div><div class="bench-name">${b.flag} ${b.name}</div><div class="bench-country">${b.country} · ${b.model}</div></div>
+        <span class="rel-badge rel-${b.rel}">${b.relLabel}</span>
+      </div>
+      <div class="bench-rows">${b.rows.map(r => `<div class="bench-row"><span class="bench-row-lbl">${r[0]}</span><span class="bench-row-val">${r[1]}</span></div>`).join('')}</div>
+      <div class="bench-note">${b.note}</div>
+    </div>`).join('');
+}
+
+function filterBench(f, el) {
+  document.querySelectorAll('#panel-benchmarks .filter-chip').forEach(c => c.classList.remove('on'));
+  el.classList.add('on');
+  renderBenchmarks(f);
+}
+
+const typeIcon = { pdf:'📄', docx:'📝', pptx:'📊' };
+const typeClass = { pdf:'icon-pdf', docx:'icon-docx', pptx:'icon-pptx' };
+const catColor = {
+  strategy:{ bg:'#dceaf7', color:'#014f85' }, research:{ bg:'#ddf0f5', color:'#0b5e6b' },
+  presentation:{ bg:'#fef3e0', color:'#a06800' }, sociology:{ bg:'#f0e8fb', color:'#6b2fa0' },
+  acb:{ bg:'#e0f0ee', color:'#1a5a58' },
+};
+
+function renderDocs(filter) {
+  const grid = document.getElementById('docs-grid');
+  const filtered = filter === 'all' ? DOCUMENTS : DOCUMENTS.filter(d => d.cat === filter);
+  grid.innerHTML = filtered.map(d => {
+    const col = catColor[d.cat] || { bg:'#f0f0f0', color:'#555' };
+    return `<div class="doc-row">
+      <div class="doc-type-icon ${typeClass[d.type]}">${typeIcon[d.type]}</div>
+      <div class="doc-info"><div class="doc-name">${d.name}</div><div class="doc-meta">${d.desc}</div></div>
+      <span class="doc-cat" style="background:${col.bg};color:${col.color}">${d.catLabel}</span>
+      <a class="doc-download" href="${d.file}" target="_blank" title="Открыть файл">👁 Открыть</a>
+    </div>`;
+  }).join('');
+}
+
+function filterDocs(f, el) {
+  document.querySelectorAll('#panel-docs .filter-chip').forEach(c => c.classList.remove('on'));
+  el.classList.add('on');
+  renderDocs(f);
+}
+
+function handleSearch(q) {
+  if (q.length > 2) {
+    openAI();
+    setTimeout(() => {
+      const inp = document.getElementById('aiInput');
+      if (inp) inp.value = 'Найди в базе знаний: ' + q;
+    }, 300);
+  }
+}
+
+// ── BUILT-IN KNOWLEDGE BASE for offline answers ──
+const KB = {
+  "токенизация": `**Токенизация недвижимости** — выпуск цифровых токенов, представляющих долю собственности на реальный актив (RWA).
+
+**Механика:**
+1. Объект помещается в SPV (Special Purpose Vehicle)
+2. SPV выпускает токены на блокчейне (Ethereum, Polygon)
+3. Токены продаются инвесторам через KYC/AML платформу
+4. Арендный доход распределяется автоматически через смарт-контракт
+5. Вторичная торговля на лицензированной бирже
+
+**Apartchain** — первая платформа токенизации недвижимости в Казахстане. Работает в регуляторной песочнице НБ РК с февраля 2026. Пилотная площадка — Iconic Towers.
+
+**Ключевой барьер:** юридическая привязка токена к реестру ГЦН.`,
+
+  "alatau": `**PropTech-экосистема Alatau City** уникальна тем, что почти все 8 функциональных блоков закрываются активами одного акционера.
+
+**Законодательный фундамент (март 2026):**
+- Digital by default (ст. 12) — цифровая транзакция как стандарт
+- Блокчейн-кадастр прав на недвижимость (п.3 ст.66)
+- Банки могут создавать дочерние структуры для цифровых активов
+- Налоговая автономность до 2050 года
+- Защита инвестиций по английскому праву
+
+**5 этапов клиентского пути:**
+Поиск (Krisha.kz) → Сделка (ACB) → Финансы (ACB ипотека) → Инвестиции (Apartchain) → Сервис (Алсеко, ЕРЦ, Kaspi, Alatau City Garant)
+
+**24 апреля 2026:** первый криптоплатёж в Казахстане — ACB + Binance Kazakhstan.`,
+
+  "рынок": `**Мировой рынок PropTech 2025-2026:**
+- Объём: $47,08 млрд (2025) → $185,31 млрд к 2034
+- CAGR: **16,4%** — быстрее финтека (15%) и e-commerce (8%)
+- >10 000 стартапов в мире
+- Мировой рынок недвижимости: ~$393,3 трлн (Savills)
+- Доля PropTech в оцифровке: <3% (McKinsey) — огромный потенциал
+
+**Казахстан:**
+- Оборот рынка: ~12 трлн тенге/год
+- 68% сделок долевого строительства — по серым схемам
+- Проникновение ипотеки в ВВП: 5% (в 10-20x ниже развитых стран)`,
+
+  "beike": `**Beike / Lianjia (Китай)** — стратегический образец для ACB PropTech.
+
+- База объектов: 315 млн верифицированных записей
+- Доля рынка: 28% вторичных сделок КНР
+- Realsight 3D: 40 млн объектов
+- Agent Copilot: 450 000 агентов, точность 92%
+- Ремонт: 25% выручки (было 5% в 2021)
+
+**Почему образец:** экосистемная модель (поиск + сделка + ремонт + аренда), а не просто портал.`,
+
+  "zillow": `**Zillow (США)** — Housing Super App.
+- 204 млн MAU
+- Маржа >75%
+- Рост ипотеки +53% (2025)
+- AI-поиск: natural language ("двушка рядом с парком")
+- Zestimate AVM: медианная ошибка 2-3%`,
+
+  "домклик": `**Домклик / Сбербанк (Россия)** — ближайшая модель для ACB.
+- 8 млн сделок/год
+- Электронная регистрация: 1-3 дня (было 10-14)
+- 30% сделок без ипотеки
+- Эскроу за фиксированный тариф
+Единое окно от поиска до регистрации.`,
+
+  "dubai": `**Dubai Land Department (ОАЭ)** — прямой аналог для Alatau City.
+- 158 000 сделок за 9 мес. 2025 на $136 млрд (+32% г/г)
+- Обязательное эскроу для off-plan сделок
+- Токенизация от $545 через Prypco Mint
+- Дистанционная регистрация через REES
+
+Сочетание налоговой автономии, защиты по английскому праву и PropTech-инфраструктуры = модель для Alatau City.`,
+
+  "социология": `**Социологическое исследование Adam Research** (опрос 8000 чел., 2023):
+
+- **37%** оценивают жилищные условия как «хорошие»
+- **47%** казахстанцев планируют купить жильё в течение 5 лет
+- **70%** молодёжи до 29 лет без жилья — планируют покупку
+- В **3,1 раза** больше критиков госинститутов среди людей с плохим жильём
+- 40-50% без собственности называют жильё главным мотивом смены региона`,
+
+  "unified": `**Unified ID — задача №1** для ACB PropTech.
+
+Единый identity-провайдер с KYC-верификацией. Один раз прошёл проверку — доступ во все сервисы без повторного KYC.
+
+**Без Unified ID:** каждый сервис работает изолированно — нет экосистемного эффекта.
+
+**Компоненты данных:**
+- Unified ID (источник — ACB)
+- Property Hub (единая база объектов)
+- Transaction Engine (событийная шина)
+- Analytics-слой (B2B продукт для НБК, АРРФР)`,
+
+  "krisha": `**Krisha.kz** — крупнейший портал недвижимости Казахстана.
+- **5,9 млн** активных пользователей/мес (итоги 2025)
+- 500 000+ объектов ежедневно
+- Владелец: **Kolesa Group** (Ломтадзе 48%, Kaspi Shop 40%)
+- Выручка 2024: 71,5 млрд тенге (+14%)
+
+**Чего не хватает:** нет AVM, нет верификации объектов, нет истории сделок, нет сквозной транзакции, нет AI-поиска.`,
+
+  "acb": `**ACB PropTech — три волны:**
+
+**Волна 1 (2025-2026):** Unified ID, онлайн-ипотека за 30 мин, эскроу, интеграция Krisha/Kolesa/ЕРЦ/Алсеко
+
+**Волна 2 (2026-2027):** Apartchain (токенизация), лицензия AFSA, вторичный рынок токенов, GITEX 2026
+
+**Волна 3 (2027-2028):** Полный lifecycle — поиск → ипотека → сделка → управление → реинвестиция. AI-персонализация, международная экспансия через AIFC.
+
+**Цель:** 8% адресуемого рынка к 2031 = **210-280 млрд ₸** выручки.`,
+};
+
+function findKBAnswer(question) {
+  const q = question.toLowerCase();
+  const matches = [];
+  
+  if (q.includes('токен') || q.includes('rwa') || q.includes('apartchain') || q.includes('дробн')) matches.push(KB['токенизация']);
+  if (q.includes('alatau') || q.includes('алатау') || q.includes('уникал') || q.includes('экосистем') || q.includes('почему')) matches.push(KB['alatau']);
+  if (q.includes('рынок') || q.includes('объём') || q.includes('млрд') || q.includes('тренд') || q.includes('казахстан')) matches.push(KB['рынок']);
+  if (q.includes('beike') || q.includes('бейке') || q.includes('китай') || q.includes('образец')) matches.push(KB['beike']);
+  if (q.includes('zillow') || q.includes('зиллоу') || q.includes('сша')) matches.push(KB['zillow']);
+  if (q.includes('домклик') || q.includes('сбер') || q.includes('россия')) matches.push(KB['домклик']);
+  if (q.includes('dubai') || q.includes('дубай') || q.includes('дld') || q.includes('оаэ')) matches.push(KB['dubai']);
+  if (q.includes('социол') || q.includes('опрос') || q.includes('adam') || q.includes('47%') || q.includes('70%')) matches.push(KB['социология']);
+  if (q.includes('unified') || q.includes('kyc') || q.includes('идентиф') || q.includes('задача №1')) matches.push(KB['unified']);
+  if (q.includes('krisha') || q.includes('криша') || q.includes('портал') || q.includes('kolesa')) matches.push(KB['krisha']);
+  if (q.includes('acb') || q.includes('волн') || q.includes('ипотек') || q.includes('банк') || q.includes('стратег')) matches.push(KB['acb']);
+  
+  return matches.length > 0 ? matches.join('\n\n---\n\n') : null;
+}
+
+// ── AI HELPERS ──
+function openAI() {
+  document.getElementById('aiOverlay').classList.add('open');
+  document.getElementById('aiInput').focus();
+}
+function closeAI() { document.getElementById('aiOverlay').classList.remove('open'); }
+function closeAIonBg(e) { if (e.target === document.getElementById('aiOverlay')) closeAI(); }
+function autoResize(el) { el.style.height = 'auto'; el.style.height = Math.min(el.scrollHeight, 120) + 'px'; }
+
+function askAI(q) {
+  openAI();
+  setTimeout(() => { document.getElementById('aiInput').value = q; sendAI(); }, 200);
+}
+
+function addMsg(text, role) {
+  const sug = document.getElementById('aiSuggestions');
+  if (sug) sug.style.display = 'none';
+  const welcome = document.querySelector('.ai-welcome');
+  if (welcome) welcome.remove();
+  const msgs = document.getElementById('aiMessages');
+  const row = document.createElement('div');
+  row.className = 'msg ' + role;
+  const av = document.createElement('div');
+  av.className = 'msg-av ' + role;
+  av.textContent = role === 'ai' ? 'AI' : '👤';
+  const bubble = document.createElement('div');
+  bubble.className = 'msg-bubble ' + role;
+  if (role === 'ai') {
+    bubble.innerHTML = text
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/^- (.*)/gm, '<div style="display:flex;gap:8px;margin:3px 0"><span style="color:var(--green3);flex-shrink:0">▸</span><span>$1</span></div>')
+      .replace(/\n\n/g, '<br><br>').replace(/\n/g, '<br>');
+  } else { bubble.textContent = text; }
+  row.appendChild(av); row.appendChild(bubble);
+  msgs.appendChild(row); msgs.scrollTop = msgs.scrollHeight;
+}
+
+function showTyping() {
+  const msgs = document.getElementById('aiMessages');
+  const t = document.createElement('div');
+  t.className = 'typing-ind'; t.id = 'typing';
+  t.innerHTML = '<span></span><span></span><span></span>';
+  msgs.appendChild(t); msgs.scrollTop = msgs.scrollHeight;
+}
+function hideTyping() { const t = document.getElementById('typing'); if (t) t.remove(); }
+
+async function sendAI() {
+  const inp = document.getElementById('aiInput');
+  const q = inp.value.trim();
+  if (!q || isAILoading) return;
+  inp.value = ''; inp.style.height = 'auto';
+  isAILoading = true;
+  document.getElementById('aiSendBtn').disabled = true;
+  addMsg(q, 'user');
+  chatHistory.push({ role: 'user', content: q });
+  showTyping();
+
+  const kbAnswer = findKBAnswer(q);
+
+  // If no API key — use KB or ask for key
+  if (!apiKey) {
+    await new Promise(r => setTimeout(r, 700));
+    hideTyping();
+    if (kbAnswer) {
+      addMsg(kbAnswer + '\n\n*— Ответ из встроенной базы знаний.*', 'ai');
+      chatHistory.push({ role: 'assistant', content: kbAnswer });
+    } else {
+      addMsg('По этому вопросу нет готового ответа. Введи Anthropic API ключ для расширенных ответов Claude.', 'ai');
+      setTimeout(() => {
+        const key = prompt('API ключ Anthropic (sk-ant-api03-...):\n\nПолучить бесплатно: console.anthropic.com');
+        if (key && key.trim().startsWith('sk-')) {
+          apiKey = key.trim();
+          sessionStorage.setItem('proptech_ai_key', apiKey);
+          addMsg('✓ Ключ сохранён. Задай вопрос снова.', 'ai');
+        }
+      }, 200);
+    }
+    isAILoading = false;
+    document.getElementById('aiSendBtn').disabled = false;
+    inp.focus(); return;
+  }
+
+  // Use Claude API with KB fallback on errors
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({ model: 'claude-haiku-4-5-20251001', max_tokens: 1200, system: AI_KNOWLEDGE, messages: chatHistory })
+    });
+    const data = await res.json();
+    hideTyping();
+    if (!res.ok) {
+      const msg = data.error?.message || '';
+      if (res.status === 401) {
+        apiKey = ''; sessionStorage.removeItem('proptech_ai_key');
+        addMsg((kbAnswer ? kbAnswer + '\n\n*— Ключ недействителен, ответ из базы знаний.*' : '❌ Неверный ключ. Получи новый на console.anthropic.com'), 'ai');
+      } else if (res.status === 529 || msg.includes('verload') || msg.includes('Overload')) {
+        addMsg((kbAnswer ? kbAnswer + '\n\n*— Серверы перегружены, ответ из базы знаний.*' : '⏳ Серверы перегружены. Попробуй снова через минуту.'), 'ai');
+      } else {
+        addMsg((kbAnswer || 'Ошибка API: ' + (msg || res.status)), 'ai');
+      }
+    } else {
+      const reply = data.content[0].text;
+      chatHistory.push({ role: 'assistant', content: reply });
+      addMsg(reply, 'ai');
+    }
+  } catch (err) {
+    hideTyping();
+    addMsg((kbAnswer ? kbAnswer + '\n\n*— Нет соединения, ответ из базы знаний.*' : 'Ошибка соединения: ' + err.message), 'ai');
+  }
+  isAILoading = false;
+  document.getElementById('aiSendBtn').disabled = false;
+  inp.focus();
+}
+
+// ── TOC ACTIVE ──
+document.querySelectorAll('.wiki-body').forEach(body => {
+  body.addEventListener('scroll', () => {
+    const sections = body.querySelectorAll('[id]');
+    let current = '';
+    sections.forEach(s => {
+      if (s.offsetTop - body.scrollTop < 100) current = s.id;
+    });
+    if (current) {
+      document.querySelectorAll('.toc-item').forEach(t => {
+        t.classList.toggle('active', t.getAttribute('onclick')?.includes(current));
+      });
+    }
+  });
+});
+</script>
+</body>
+</html>
