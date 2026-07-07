@@ -962,6 +962,7 @@ body {
       <strong>PropTech Knowledge Base</strong>
     </div>
     <div class="topbar-actions">
+      <button class="tbtn" onclick="window.open('white-paper.html','_blank')">📄 White Paper</button>
       <button class="tbtn" onclick="openAI()">🤖 AI-чат</button>
       <button class="tbtn primary" onclick="showPanel('docs',document.querySelector('.nav-item:nth-child(6)'))">📁 Все документы</button>
     </div>
@@ -973,7 +974,7 @@ body {
     <div class="panel active" id="panel-home">
       <div class="hero">
         <div class="hero-tag">
-          <span>●</span> Актуально · май 2026
+          <span>●</span> Актуально · июль 2026
         </div>
         <h1>PropTech Knowledge Base</h1>
         <p>Центральный хаб знаний по трансформации рынка недвижимости Казахстана. Исследования, стратегия, бенчмарки и документы Alatau City Bank.</p>
@@ -1729,7 +1730,7 @@ const BENCHMARKS = [
 
 const DOCUMENTS = [
   { name:'Справка о PropTech-трансформации и Alatau City', type:'docx', cat:'research', catLabel:'Исследование', file:'https://drive.google.com/file/d/1iMCGoq2z9IO-Q5Ih_YLtNG5yNUs4Bu0E/view?usp=sharing', desc:'Мировой контекст, казахстанская специфика, социологические данные, стратегические выводы' },
-  { name:'Стратегия PropTech-трансформации (White Paper)', type:'docx', cat:'strategy', catLabel:'White Paper', file:'https://drive.google.com/file/d/16r4y6UN9MXiUMuUgE8U0Gf2UVIChEbTl/view?usp=sharing', desc:'Официальная стратегия ACB: глобальный рынок, макроэкономика РК, концепция экосистемы, дорожная карта' },
+  { name:'Стратегия PropTech-трансформации (White Paper, v1.1 · июль 2026)', type:'docx', cat:'strategy', catLabel:'White Paper', file:'white-paper.html', desc:'Актуализированная стратегия ACB: обновлённые данные по Дубаю, рынку РК и PropTech; читается прямо на сайте, без Google Drive' },
   { name:'Операционный контур PropTech-экосистемы (краткий)', type:'docx', cat:'strategy', catLabel:'Стратегия', file:'https://drive.google.com/file/d/12wusyke3wtHl30Tk2-TMktjv_MJPWPVS/view?usp=sharing', desc:'Краткий обзор архитектуры, пяти этапов клиентского пути и минимального контура запуска' },
   { name:'Операционный контур PropTech-экосистемы (полный)', type:'docx', cat:'strategy', catLabel:'Стратегия', file:'https://drive.google.com/file/d/1UV_g6UCWQO0cLi3GfAiXlED1lVMCqGDt/view?usp=sharing', desc:'Детальный разбор всех вертикалей: Krisha, ACB, Alatau City Garant, Алсеко/ЕРЦ, Kaspi, токенизация' },
   { name:'ACB PropTech Strategy — финальная презентация', type:'pptx', cat:'presentation', catLabel:'Презентация', file:'https://drive.google.com/file/d/11orSxSez9bdM8F-n90gSG4LJmi3jI13B/view?usp=sharing', desc:'Финальная презентация стратегии PropTech для акционеров ACB' },
